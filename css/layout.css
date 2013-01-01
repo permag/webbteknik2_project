@@ -2,7 +2,7 @@
 	float: left;
 	border: 2px solid black;
 	width: 250px;
-	margin-right: 19px;
+	margin-right: 25px;
 }
 .mainMenu {
 	float: left;
@@ -16,9 +16,10 @@
 }
 #alsterPhotoFrame {
 	width: 400px;
-	height: 300px;
+	height: 260px;
 	border: 3px solid black;
 	margin: 25px;
+	overflow: hidden;
 }
 #alsterQuoteFrame {
 	width: 400px;

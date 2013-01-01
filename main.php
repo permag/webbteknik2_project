@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/basic.css">
 		<link rel="stylesheet" type="text/css" href="css/layout.css">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 		<link rel="apple-touch-icon" href="img/icon57.png" />
 		<link rel="apple-touch-icon" sizes="72x72" href="img/icon72.png" />
 		<link rel="apple-touch-icon" sizes="114x114" href="img/icon114.png" />
@@ -48,13 +49,15 @@
 			
 			<div class="leftMenu">
 				LEFT
-				<input type="text" id="searchPhotoTag" />
+				<input type="text" id="searchPhotoTag" class="pull-left" />
+				<button id="searchPhotoTagButton" class="pull-right">Find</button>
+				<div id="searchPhotosContainer"></div>
 			</div>
 
 			<div class="mainMenu">
 				<div id="alster">
 					<div id="alsterPhotoFrame"></div>
-					<div id="alsterQuoteFrame"></div>
+					<div id="alsterQuoteFrame">"Uno var en cool revisor." -The Uno</div>
 				</div>
 			</div>
 
@@ -64,6 +67,7 @@
 
 		<!-- JavaScript files -->
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/init.js"></script>
 	</body>
