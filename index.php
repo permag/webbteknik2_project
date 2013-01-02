@@ -1,30 +1,16 @@
-<?php
+<?php 
 
 require 'src/facebook.php';
-
-// Create our Application instance (replace this with your appId and secret).
-$facebook = new Facebook(array(
-  'appId'  => '431206723613188',
-  'secret' => '05949e9ad0b4f4dd85a67f5fc06996d0',
-));
-
-
-// Get User ID
-$user = $facebook->getUser();
-
-
-if ($user) {
-  try {
-    // Proceed knowing you have a logged in user who's authenticated.
-    $user_profile = $facebook->api('/me');
-  } catch (FacebookApiException $e) {
-    error_log($e);
-    $user = null;
-  }
-}
+require_once('model/Database.php');
+require_once('fb.php');
 
 if ($user) {
   $_SESSION['activeUserId'] = $user_profile['id'];
+
+  //db
+  $db = new Database();
+  $db->createDatabase('sqlite:data/sillyPlayDB.sqlite');
+  $stmt = $db->select('SELECT * FROM Alster WHERE externalUserId = :externalUserId', array(':externalUserId' => $_SESSION['activeUserId']));
 }
 
 ?>
@@ -117,6 +103,7 @@ if ($user) {
       function logout() {
         FB.logout(function(response) {
           // user is now logged out
+          window.location = 'index.php';
         });
       }
 
@@ -140,6 +127,7 @@ if ($user) {
             ?>
               <li class="active"><a href="index.php">Home</a></li>
               <li class=""><a href="main.php">Create</a></li>
+              <li class=""><a href="global.php">Global</a></li>
             <?php
               }
               ?>
@@ -154,6 +142,18 @@ if ($user) {
 
 
       <h1>sillyPlay</h1>
+      <div class="continer pull-right">
+        <h4>My stuff</h4>
+        <div>
+          <?php
+            while ($row = $stmt->fetch()) {
+              $alsterId = $row['alsterId'];
+              $alsterUrl = $row['alsterUrl'];
+              echo '<a href="share/?id='. $alsterId .'"><img src="alster/'. $alsterUrl .'" width="100" /></a>';
+           }
+          ?>
+        </div>
+      </div>
 
       <?php if ($user): ?>
         <?php
@@ -169,7 +169,7 @@ if ($user) {
 
 
       <?php else: ?>
-        <strong><em>Login using your Facebook account:</em></strong>
+        <strong><em>Login using your Facebook account: </em></strong>
         <a href="#" id="loginLink">Login</a>
       <?php endif ?>
     </div>

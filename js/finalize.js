@@ -5,6 +5,10 @@ var finalize = {
 	lng: null,
 
 	preMake: function() {
+
+		$('#alsterQuoteFrame').html($('#editQuoteTextarea').val()).show();
+		$('#editQuoteTextarea, #saveQuoteEdit').remove();
+
 		var dialogContentText = '';
 			var finalizeDialog = $("#finalizeDialog");
 			finalizeDialog.dialog({
@@ -30,20 +34,19 @@ var finalize = {
 					},
 					"No, not yet.": function() {
 						$(this).dialog("close");
-						alert(finalize.lat);
 					}
 				}
 
 			});
-			finalizeDialog.html('<p>Your alster is about to get finalized.</p><br /><p>Are you sure you want to proceed?</p><br /><p><input type="button" id="allowGeolocation" value="Add my geo-location" />');
+			finalizeDialog.html('<p>Your alster is about to get finalized.</p><br /><p>Are you sure you want to proceed?</p><br /><p><input type="button" id="allowGeolocation" value="Add my geolocation" />');
 
 			$('#allowGeolocation').click(function(){
 				if (finalize.allowGeo == false) {
 					finalize.allowGeo = true;
-					$(this).val('Remove my geo-location');
+					$(this).val('Remove my geolocation');
 				} else {
 					finalize.allowGeo = false;
-					$(this).val('Add my geo-location');
+					$(this).val('Add my geolocation');
 				}
 			});
 
@@ -63,8 +66,11 @@ var finalize = {
 
 		// remove all img but alster img
 		$('img').not('.ui-resizable').remove();
+
+		var alster = $('#alster');
+		var imgSrc = alster.find('img').attr('src');
 		
-		$('#alster').html2canvas({ onrendered: function(canvas) {
+		alster.html2canvas({ onrendered: function(canvas) {
 
 	        $.ajax({
 	          url: 'model/canvas2png.php',
@@ -73,17 +79,18 @@ var finalize = {
 	          data: {
 	            img: canvas.toDataURL(),
 	            lat: finalize.lat,
-	            lng: finalize.lng
+	            lng: finalize.lng,
+	            tempImg: imgSrc
 	          },
 	          success: function(data){
 	          	// data contains id to inserted DB row (json_encoded)
 	          	var id_DB = data;
-	          	window.location = 'index.php';
+	          	window.location = 'share/?id=' + id_DB;
 
-	          }//,
-	          // error: function(msg){
-	          //   console.log(msg);
-	          // }
+	          },
+	          error: function(msg){
+	            console.log(msg);
+	          }
 	        });
 	    }});
 	}

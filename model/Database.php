@@ -7,10 +7,10 @@
 		/**
 		 * CREATE SQLite DATABASE
 		 */
-		public function createDatabase() {
+		public function createDatabase($database) {
 
 			try {
-				$this->_pdo = new PDO('sqlite:../data/sillyPlayDB.sqlite');
+				$this->_pdo = new PDO($database);
 				$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 			catch (PDOException $e) {
@@ -19,8 +19,9 @@
 
 			$query = "CREATE TABLE IF NOT EXISTS Alster 
 						(alsterId INTEGER PRIMARY KEY,
-						 externalUserId TEXT,
+						 externalUserId INTEGER,
 						 alsterUrl TEXT,
+						 alphaId TEXT,
 						 lng REAL,
 						 lat REAL)";
 
