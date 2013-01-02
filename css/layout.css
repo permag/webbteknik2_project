@@ -1,3 +1,11 @@
+h3 {
+	font-size: 18px;
+	padding: 7px 0 0 0;
+	margin: 0;
+}
+input {
+	width: 175px;
+}
 .leftMenu {
 	float: left;
 	border: 2px solid black;
@@ -23,8 +31,27 @@
 }
 #alsterQuoteFrame {
 	width: 400px;
-	max-height: 300px;
-	min-height: 100px;
-	border: 1px solid black;
+	min-height: 30px;
 	margin: 25px;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 16px;
+}
+#searchPhotosArea, #searchQuoteTagArea {
+	float: left;
+	overflow: auto;
+	max-height: 300px;
+}
+#searchPhotosArea {
+	text-align: center;
+}
+#searchQuoteTagArea {
+	padding: 7px;
+	font-weight: bold;
+	font-style: italic;
+}
+#editQuoteTextarea {
+	margin-left: 25px;
+	width: 392px;
+	min-height: 99px;
 }

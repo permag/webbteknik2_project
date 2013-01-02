@@ -7,13 +7,8 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="css/basic.css">
 		<link rel="stylesheet" type="text/css" href="css/layout.css">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-		<link rel="apple-touch-icon" href="img/icon57.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="img/icon72.png" />
-		<link rel="apple-touch-icon" sizes="114x114" href="img/icon114.png" />
-		<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj0d4GRxrwk3TTU2Vs481ozrXNE0Wu648&sensor=true"></script>
+
 		<title>sillyPlay</title>
 	</head>
 	<body>
@@ -42,33 +37,39 @@
 
 
 		<div class="container main">
-			<h1>sillyPlay</h1>
 		</div>
 
 		<div class="container">
 			
 			<div class="leftMenu">
-				LEFT
+				<h3>PHOTOS</h3>
 				<input type="text" id="searchPhotoTag" class="pull-left" />
-				<button id="searchPhotoTagButton" class="pull-right">Find</button>
-				<div id="searchPhotosContainer"></div>
+				<button id="searchPhotoTagButton" class="pull-left">Find</button>
+				<div id="searchPhotosArea"></div>
+
+				<h3>QUOTES</h3>
+				<input type="text" id="searchQuoteTag" class="pull-left" />
+				<button id="searchQuoteTagButton" class="pull-left">Find</button>
+				<div id="searchQuoteTagArea"></div>
 			</div>
 
 			<div class="mainMenu">
 				<div id="alster">
-					<div id="alsterPhotoFrame"></div>
+					<div id="alsterPhotoFrame"><img src="http://bigfatmama.se/hej/bild.jpg" alt=""></div>
 					<div id="alsterQuoteFrame">"Uno var en cool revisor." -The Uno</div>
 				</div>
 			</div>
 
 
 		</div>
+		<p id="finalize">finalize</p>
 
 
 		<!-- JavaScript files -->
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+		<script src="js/jquery.plugin.html2canvas.min.js"></script>
+   		<script src="js/html2canvas.min.js"></script>
 		<script src="js/init.js"></script>
 	</body>
 </html>
