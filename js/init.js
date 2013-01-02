@@ -51,7 +51,7 @@ var drop = function() {
 	dropTo.droppable({
 		accept: '.photoSrc',
 		tolerance: "pointer", // mouse "on target"
-		//hoverClass: "activeArea",
+		hoverClass: "activeArea",
 		drop: function(ev, ui) {
 			var droppedItem = $(ui.draggable).clone();
 
@@ -172,7 +172,7 @@ var finalize = function() {
 	// remove resize handles
 	$(".mainMenu").find(".ui-resizable-handle").remove();
 
-
+	// remove all img but alster img
 	$('img').not('.ui-resizable').remove();
 	
 	$('#alster').html2canvas({ onrendered: function(canvas) {
@@ -182,8 +182,7 @@ var finalize = function() {
           dataType: 'json',
           type: 'POST',
           data: {
-            img: canvas.toDataURL(),
-            memberId: 111111
+            img: canvas.toDataURL()
           },
           success: function(data){
           	// data contains id to inserted DB row (json_encoded)

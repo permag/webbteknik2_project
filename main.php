@@ -1,3 +1,32 @@
+<?php
+require 'src/facebook.php';
+
+// Create our Application instance (replace this with your appId and secret).
+$facebook = new Facebook(array(
+  'appId'  => '431206723613188',
+  'secret' => '05949e9ad0b4f4dd85a67f5fc06996d0',
+));
+
+
+// Get User ID
+$user = $facebook->getUser();
+
+if ($user) {
+  try {
+    // Proceed knowing you have a logged in user who's authenticated.
+    $user_profile = $facebook->api('/me');
+  } catch (FacebookApiException $e) {
+    error_log($e);
+    $user = null;
+  }
+}
+
+if (!$user) {
+	header('location: index.php');
+}
+
+
+?>
 <!doctype html>
 <html>
 	<head>
@@ -8,10 +37,11 @@
 		<link rel="stylesheet" type="text/css" href="css/basic.css">
 		<link rel="stylesheet" type="text/css" href="css/layout.css">
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
+		<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
 		<title>sillyPlay</title>
 	</head>
 	<body>
+
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
@@ -24,9 +54,8 @@
 					<a class="brand" href="./">sillyPlay</a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li class="active"><a href="#">Home</a></li>
-							<li class=""><a href="#">menu 1</a></li>
-							<li class=""><a href="#">menu 2</a></li>
+			                <li class=""><a href="index.php">Home</a></li>
+			                <li class="active"><a href="main.php">Create</a></li>
 						</ul>
 					</div>
 
@@ -35,8 +64,13 @@
 		</nav>
 
 
-
 		<div class="container main">
+		<?php
+			if ($user) {
+				echo '<img src="https://graph.facebook.com/'.$user.'/picture">';
+				echo $user_profile['first_name'] . ' ' . $user_profile['last_name'];
+			}
+		?>
 		</div>
 
 		<div class="container">
@@ -55,7 +89,7 @@
 
 			<div class="mainMenu">
 				<div id="alster">
-					<div id="alsterPhotoFrame"><img src="http://bigfatmama.se/hej/bild.jpg" alt=""></div>
+					<div id="alsterPhotoFrameBorder"><div id="alsterPhotoFrame"></div></div>
 					<div id="alsterQuoteFrame">"Uno var en cool revisor." -The Uno</div>
 				</div>
 			</div>

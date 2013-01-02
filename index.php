@@ -1,19 +1,4 @@
 <?php
-/**
- * Copyright 2011 Facebook, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License. You may obtain
- * a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- */
 
 require 'src/facebook.php';
 
@@ -27,11 +12,6 @@ $facebook = new Facebook(array(
 // Get User ID
 $user = $facebook->getUser();
 
-// We may or may not have this data based on whether the user is logged in.
-//
-// If we have a $user id here, it means we know the user is logged into
-// Facebook, but we don't know if the access token is valid. An access
-// token is invalid if the user logged out of Facebook.
 
 if ($user) {
   try {
@@ -43,35 +23,24 @@ if ($user) {
   }
 }
 
-// Login or logout url will be needed depending on current user state.
 if ($user) {
-  $logoutUrl = $facebook->getLogoutUrl();
-} else {
-  $loginUrl = $facebook->getLoginUrl();
+  $_SESSION['activeUserId'] = $user_profile['id'];
 }
-
-// This call will always work since we are fetching public data.
-//$naitik = $facebook->api('/naitik');
 
 ?>
 <!doctype html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
+    <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/basic.css">
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
     <script src="//connect.facebook.net/en_US/all.js"></script>
-    <title>php-sdk</title>
-    <style>
-      body {
-        font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
-      }
-      h1 a {
-        text-decoration: none;
-        color: #3b5998;
-      }
-      h1 a:hover {
-        text-decoration: underline;
-      }
-    </style>
+    <title>sillyPlay</title>
+
   </head>
   <body>
 
@@ -82,7 +51,7 @@ if ($user) {
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '431206723613188', // App ID
-          channelUrl : 'http://localhost/dev/fb_login/', // Channel File
+          channelUrl : 'http://localhost/dev/webbteknik2_project/', // Channel File
           status     : true, // check login status
           cookie     : true, // enable cookies to allow the server to access the session
           xfbml      : true  // parse XFBML
@@ -97,8 +66,20 @@ if ($user) {
                 login();
             } else {
                 // not_logged_in
-                login();
+               // login();
             }
+
+        });
+
+        $(function(){
+          $('#loginLink').click(function(e){
+            login();
+            e.preventDefault();
+          });
+          $('#logoutLink').click(function(e){
+            logout();
+            e.preventDefault();
+          });
         });
 
       };
@@ -139,53 +120,65 @@ if ($user) {
         });
       }
 
-      $(function(){
-        $('#login').click(function(e){
-          login();
-        });
-        $('#logout').click(function(e){
-          logout();
-        });
-      });
     </script>
     <!-- END LOGIN -->
 
+<!-- NAVBAR -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./">sillyPlay</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <?php
+              if ($user) {
+            ?>
+              <li class="active"><a href="index.php">Home</a></li>
+              <li class=""><a href="main.php">Create</a></li>
+            <?php
+              }
+              ?>
+            </ul>
+          </div>
 
-    <?php
-      if ($user) {
-        echo 'you are logged in ' . $user_profile['first_name'] . '.';
-      }
-    ?>
-
-
-    <h1>php-sdk</h1>
-
-    <?php if ($user): ?>
-      <a href="<?php echo $logoutUrl; ?>">Logout</a>
-      <p id="logout">Logout</p>
-    <?php else: ?>
-      <div>
-        Login using OAuth 2.0 handled by the PHP SDK:
-        <a href="<?php echo $loginUrl; ?>">Login with Facebook</a>
+        </div>
       </div>
-    <?php endif ?>
+    </nav>
 
-    <h3>PHP Session</h3>
-    <pre><?php print_r($_SESSION); ?></pre>
+    <div class="container main">
 
-    <?php if ($user): ?>
-      <h3>You</h3>
-      <img src="https://graph.facebook.com/<?php echo $user; ?>/picture">
 
-      <h3>Your User Object (/me)</h3>
-      <pre><?php print_r($user_profile); ?></pre>
+      <h1>sillyPlay</h1>
 
-      <?php
-        echo $user_profile['first_name'];
-      ?>
-    <?php else: ?>
-      <strong><em>You are not Connected.</em></strong>
-    <?php endif ?>
+      <?php if ($user): ?>
+        <?php
+          if ($user) {
+            echo '<img src="https://graph.facebook.com/'.$user.'/picture">';
+            echo $user_profile['first_name'] . ' ' . $user_profile['last_name'];
+          }
+        ?>
+        <a href="#" id="logoutLink">Logout</a>
+      <?php endif ?>
 
+      <?php if ($user): ?>
+
+
+      <?php else: ?>
+        <strong><em>Login using your Facebook account:</em></strong>
+        <a href="#" id="loginLink">Login</a>
+      <?php endif ?>
+    </div>
+
+    <!-- JavaScript files -->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="js/jquery.plugin.html2canvas.min.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+    <script src="js/init.js"></script>
   </body>
 </html>

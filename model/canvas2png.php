@@ -1,18 +1,18 @@
-<?php
+<?php session_start();
     // called by ajax
-
     header('Content-type: application/json');
 
+    require_once('Database.php');
 
     if (isset($_POST['img'])) {
         $img = $_POST['img'];
-        $memberId = $_POST['memberId'];
+        $memberId = $_SESSION['activeUserId'];
         $img = str_replace('data:image/png;base64,', '', $img);
         $data = base64_decode($img);
 
         $path = '../alster/';
         date_default_timezone_set('Europe/Berlin');
-        $file = $memberId .'_'. date("YmdHis") . rand(1000, 9999);
+        $file = $memberId .'_'. date("YmdHis") . rand(100, 999);
         $ext = '.png';
         
         $pathAndFile = $path . $file . $ext;
@@ -24,12 +24,21 @@
         $handle = fopen($pathAndFile, 'wb');
         fwrite($handle, $data);
         fclose($handle);
+       
+        // database
+        $db = new Database();
+        $db->createDatabase();
 
-        // Save filename in DB
-      //  $saveFileName = new InsertCreationInDB();
-      //  $id = $saveFileName -> saveToDB($file.'.jpg', $memberId); // $id = inserted it in db
+        $query = "INSERT INTO Alster (externalUserId, alsterUrl)
+                      VALUES (:externalUserId, :alsterUrl)";
 
-       // echo json_encode($id); // ajax callback
+        $param = array( ':externalUserId' => $memberId, 
+                        ':alsterUrl'      => $file.$ext);
+
+        $ret = $db->insert($query, $param);
+        $lastInsertId = $db->lastInsertId();
+
+        echo json_encode($lastInsertId); // ajax callback
     }
 
 ?>
