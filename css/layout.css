@@ -6,6 +6,9 @@ h3 {
 input {
 	width: 175px;
 }
+.container {
+	width: 761px;
+}
 .leftMenu {
 	float: left;
 	border: 2px solid black;
@@ -14,9 +17,7 @@ input {
 }
 .mainMenu {
 	float: left;
-	border: 2px solid red;
-	width: 480px;
-	padding: 5px;
+	width: 465px;
 }
 #alster {
 	border: 2px solid black;

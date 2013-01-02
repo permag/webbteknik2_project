@@ -6,6 +6,8 @@
 
     if (isset($_POST['img'])) {
         $img = $_POST['img'];
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
         $memberId = $_SESSION['activeUserId'];
         $img = str_replace('data:image/png;base64,', '', $img);
         $data = base64_decode($img);
@@ -29,11 +31,13 @@
         $db = new Database();
         $db->createDatabase();
 
-        $query = "INSERT INTO Alster (externalUserId, alsterUrl)
-                      VALUES (:externalUserId, :alsterUrl)";
+        $query = "INSERT INTO Alster (externalUserId, alsterUrl, lat, lng)
+                      VALUES (:externalUserId, :alsterUrl, :lat, :lng)";
 
         $param = array( ':externalUserId' => $memberId, 
-                        ':alsterUrl'      => $file.$ext);
+                        ':alsterUrl'      => $file.$ext,
+                        ':lat'            => $lat,
+                        ':lng'            => $lng);
 
         $ret = $db->insert($query, $param);
         $lastInsertId = $db->lastInsertId();

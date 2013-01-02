@@ -177,8 +177,5 @@ if ($user) {
     <!-- JavaScript files -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-    <script src="js/jquery.plugin.html2canvas.min.js"></script>
-    <script src="js/html2canvas.min.js"></script>
-    <script src="js/init.js"></script>
   </body>
 </html>
