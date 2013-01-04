@@ -5,7 +5,7 @@ var finalize = {
 	lng: null,
 
 	preMake: function() {
-
+		finalize.allowGeo = false;
 		$('#alsterQuoteFrame').html($('#editQuoteTextarea').val()).show();
 		$('#editQuoteTextarea, #saveQuoteEdit').remove();
 
@@ -38,7 +38,7 @@ var finalize = {
 				}
 
 			});
-			finalizeDialog.html('<p>Your alster is about to get finalized.</p><br /><p>Are you sure you want to proceed?</p><br /><p><input type="button" id="allowGeolocation" value="Add my geolocation" />');
+			finalizeDialog.html('<p>Your alster is about to get finalized.</p><br /><p>Are you sure you want to proceed?</p><br /><p class="icon-map-marker"><input type="button" id="allowGeolocation" value="Add my geolocation" /></p>');
 
 			$('#allowGeolocation').click(function(){
 				if (finalize.allowGeo == false) {
@@ -67,6 +67,7 @@ var finalize = {
 		// remove all img but alster img
 		$('img').not('.ui-resizable').remove();
 
+
 		var alster = $('#alster');
 		var imgSrc = alster.find('img').attr('src');
 		
@@ -94,4 +95,5 @@ var finalize = {
 	        });
 	    }});
 	}
+	
 };

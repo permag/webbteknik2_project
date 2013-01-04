@@ -23,7 +23,6 @@ var init = {
 	drag: function() {
 		$('.photoSrc').draggable({
 			helper: "clone",
-			containment: "#wrap",
 			opacity: 0.75,
 			zIndex: 999,
 			cursor: "move",
@@ -43,12 +42,17 @@ var init = {
 
 
 				if (droppedItem.hasClass("photoSrc")) {
+					// delete old image in photo frame
+					if ($(this).find('img').length > 0) {
+						var oldImage = $(this).find('img').attr('src');
+						init.deleteTempImg(oldImage);
+					}
 					$(this).empty(); // if templatePhoto already contains div/img, replace with new.
 
 					var fileName = droppedItem.attr("src"); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1_t.jpg
 					var newFileName = fileName.replace("_t", ""); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1.jpg
 
-
+					// copy api image to webserver
 					$.ajax({
 						url: 'model/copyImage.php',
 						type: 'GET',
@@ -106,22 +110,22 @@ var init = {
 		var searchQuoteTag = $('#searchQuoteTag');
 		
 		$.ajax({
-		    url: "model/getQuotes.php",
+		    url: "http://www.stands4.com/services/v2/quotes.php?uid=2543&tokenid=Xor0DOW0C4Ag1Iay&searchtype=AUTHOR&query=" + searchQuoteTag.val(),
 		    type: "GET",
-		    dataType: 'JSON',
+		    dataType: 'XML',
 		    cache: true,
-		    data: { source: searchQuoteTag.val() },
 		    success: function(data) {
-		    	var quote = '';
-		    	$.each(data, function(key, val){
-		    		if (val == null) {
-		    			quote += '<div>No quotes found.</div>';
-		    			return false;
-		    		}
-		    		quote += '<div class="quotesList">' + val.quote + '</div>';
-		    	});
+		    	var output = '';
+		    	if ($(data).find('result').length == 0){
+		    		output = '<div>No quotes found.</div>';
+		    	}
+				$(data).find('result').each(function(){
+					var quote = $(this).find('quote').text();
+					var author = $(this).find('author').text();
+					output += '<div class="quotesList">\"'+ quote + '\" <br /> - ' + author +'</div>';
+				});
 		    	
-		    	$('#searchQuoteTagArea').html(quote);
+		    	$('#searchQuoteTagArea').html(output);
 
 		    	$('.quotesList').click(function(e){
 		    		$('#alsterQuoteFrame').html($(this).html());
@@ -135,15 +139,30 @@ var init = {
 	editQuote: function() {
 		var quoteFrame = $('#alsterQuoteFrame');
 		var quote = quoteFrame.html();
+		quote = quote.replace(/<br\s*[\/]?>/gi, '\n');
 
 		quoteFrame.hide();
 		quoteFrame.parent().append('<textarea id="editQuoteTextarea">'+ quote +'</textarea><button id="saveQuoteEdit">Save</button>');
 
 		$('#saveQuoteEdit').click(function(e){
-			quoteFrame.html($('#editQuoteTextarea').val()).show();
+			var text = $('#editQuoteTextarea').val();
+			text = text.replace(/\n/g, '<br />');
+			quoteFrame.html(text).show();
 			$('#editQuoteTextarea, #saveQuoteEdit').remove();
 		});
+	},
+
+	deleteTempImg: function(imgUrl) {
+		$.ajax({
+			url: 'model/deleteTempImg.php',
+			type: 'GET',
+			data: { imgUrl: imgUrl },
+			success: function(data){
+
+			}
+		});
 	}
+
 };
 
 $(function() {
@@ -156,9 +175,9 @@ $(function() {
 	});
 	$('#alsterQuoteFrame').click(function(e){
 		init.editQuote();
-		e.stopPropagation();
 	});
 	$('#finalize').click(function(e){
 		finalize.preMake();
 	});
+
 });

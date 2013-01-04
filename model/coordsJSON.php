@@ -14,7 +14,3 @@
 
 	echo json_encode($outputJSON);
 ?>
-
-
-
-

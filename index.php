@@ -10,7 +10,7 @@ if ($user) {
   //db
   $db = new Database();
   $db->createDatabase('sqlite:data/sillyPlayDB.sqlite');
-  $stmt = $db->select('SELECT * FROM Alster WHERE externalUserId = :externalUserId', array(':externalUserId' => $_SESSION['activeUserId']));
+  $stmt = $db->select('SELECT * FROM Alster WHERE externalUserId = :externalUserId ORDER BY alsterId DESC', array(':externalUserId' => $_SESSION['activeUserId']));
 }
 
 ?>
@@ -143,16 +143,25 @@ if ($user) {
 
       <h1>sillyPlay</h1>
       <div class="continer pull-right">
-        <h4>My stuff</h4>
-        <div>
-          <?php
+      <?php
+      if ($user) {
+        ?>
+        <h4>My stuff <span id="deleteAlsterSpan"><a href="#" id="deleteAlster"><p class="icon-trash" title="Toggle trash can"></p></a></span></h4>
+        <div id="trash">Drag here to delete</div>
+        <div id="myStuff">
+        <?php
+          $myAlsterId = 0;
             while ($row = $stmt->fetch()) {
+              $myAlsterId++;
               $alsterId = $row['alsterId'];
               $alsterUrl = $row['alsterUrl'];
-              echo '<a href="share/?id='. $alsterId .'"><img src="alster/'. $alsterUrl .'" width="100" /></a>';
-           }
-          ?>
+              echo '<a href="share/?id='. $alsterId .'" id="myAlster'.$myAlsterId.'" class="myAlster"><img src="alster/'. $alsterUrl .'" width="100" /></a>';
+            }
+        ?>
         </div>
+        <?php
+       }
+      ?>
       </div>
 
       <?php if ($user): ?>
@@ -165,10 +174,7 @@ if ($user) {
         <a href="#" id="logoutLink">Logout</a>
       <?php endif ?>
 
-      <?php if ($user): ?>
-
-
-      <?php else: ?>
+      <?php if (!$user): ?>
         <strong><em>Login using your Facebook account: </em></strong>
         <a href="#" id="loginLink">Login</a>
       <?php endif ?>
@@ -177,5 +183,6 @@ if ($user) {
     <!-- JavaScript files -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="js/home.js"></script>
   </body>
 </html>

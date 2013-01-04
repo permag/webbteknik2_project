@@ -74,19 +74,19 @@ if (!$user) {
 					<div id="alsterPhotoFrameBorder"><div id="alsterPhotoFrame"></div></div>
 					<div id="alsterQuoteFrame">"Uno var en cool revisor." -The Uno</div>
 				</div>
+				<button id="finalize" class="btn btn-large btn-primary pull-right">FINALIZE</button>
 			</div>
 
-
 		</div>
-		<p id="finalize">finalize</p>
+		
 		<div id="finalizeDialog"></div>
-
 
 		<!-- JavaScript files -->
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 		<script src="js/jquery.plugin.html2canvas.min.js"></script>
    		<script src="js/html2canvas.min.js"></script>
+   		<script src="js/jquery.masonry.min.js"></script>
    		<script src="js/finalize.js"></script>
 		<script src="js/init.js"></script>
 	</body>

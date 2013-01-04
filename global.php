@@ -43,23 +43,14 @@ require_once('fb.php');
 		</nav>
 
 
-		<div class="container main">
-		<?php
-			if ($user) {
-				echo '<img src="https://graph.facebook.com/'.$user.'/picture">';
-				echo $user_profile['first_name'] . ' ' . $user_profile['last_name'];
-			}
-		?>
-		</div>
-
-		<div class="container">
-			<div id="map"></div>
-		</div>
+		<div id="map"></div>
+		<div id="shareDialog"></div>
 
 
 		<!-- JavaScript files -->
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script src="js/global.js"></script>
 	</body>
 </html>

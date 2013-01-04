@@ -53,10 +53,27 @@ input {
 #searchPhotosArea {
 	text-align: center;
 }
+.photoSrc {
+	width: 50px;
+	cursor: move;
+	border: 2px solid transparent;
+	float: left;
+}
+.photoSrc:hover {
+	border-color: gray;	 
+}
 #searchQuoteTagArea {
 	padding: 7px;
 	font-weight: bold;
 	font-style: italic;
+}
+.quotesList {
+	cursor: pointer;
+	padding: 5px 3px;
+	margin-bottom: 2px;
+}
+.quotesList:hover {
+	background: rgba(100,100,100,0.3);
 }
 #editQuoteTextarea {
 	margin-left: 25px;
@@ -64,12 +81,40 @@ input {
 	min-height: 99px;
 }
 .activeArea {
-	background: rgba(200,200,200,0.7);
+	background: rgba(200,200,200,0.7) !important;
 }
 #map {
-	width: 840px;
-	height: 470px;
-	border: 3px solid black;
+	width: 100%;
+	height: 100%;
 }
 #map label { width: auto; display:inline; }
 #map img { max-width: none; }
+
+#myStuff {
+	width: 300px;
+}
+#myStuff img {
+	border: 3px solid transparent;
+}
+#myStuff img:hover {
+	border-color: rgba(200,200,200, 0.7);
+}
+#droppedPhoto {
+	position: relative;
+}
+#finalize {
+	margin: 15px 5px;
+}
+#allowGeolocation {
+	margin-left: 20px;
+}
+#deleteAlsterSpan {
+	margin-left: 130px;
+}
+#trash {
+	width: 212px;
+	height: 100px;
+	display: none;
+	background: rgba(100,100,100,0.8);
+	text-align: center;
+}

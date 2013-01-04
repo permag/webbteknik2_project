@@ -6,7 +6,7 @@
         'api_key'   => '485269b267d9e8a9e5210a774d6ee337',
         'method'    => 'flickr.photos.search',
         'tags'      => $tag,
-        'per_page'  => 36,
+        'per_page'  => 55,
         'format'    => 'php_serial'
     );
     // Bygga urlen
