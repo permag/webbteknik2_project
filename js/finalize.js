@@ -1,13 +1,14 @@
 var finalize = {
 
-	allowGeo: false,
+	allowGeo: true,
 	lat: null,
 	lng: null,
 
 	preMake: function() {
-		finalize.allowGeo = false;
+		finalize.allowGeo = true;
+		$('#saveQuoteEdit').click();
 		$('#alsterQuoteFrame').html($('#editQuoteTextarea').val()).show();
-		$('#editQuoteTextarea, #saveQuoteEdit').remove();
+		$('#editQuoteTextarea, #editQuoteButtons').remove();
 
 		var dialogContentText = '';
 			var finalizeDialog = $("#finalizeDialog");
@@ -38,15 +39,15 @@ var finalize = {
 				}
 
 			});
-			finalizeDialog.html('<p>Your alster is about to get finalized.</p><br /><p>Are you sure you want to proceed?</p><br /><p class="icon-map-marker"><input type="button" id="allowGeolocation" value="Add my geolocation" /></p>');
+			finalizeDialog.html('<p>Your alster is about to get finalized.</p><br /><p>Are you sure you want to proceed?</p><br /><p class="icon-map-marker"><input type="button" id="allowGeolocation" value="Geolocation ON" /></p>');
 
 			$('#allowGeolocation').click(function(){
-				if (finalize.allowGeo == false) {
-					finalize.allowGeo = true;
-					$(this).val('Remove my geolocation');
-				} else {
+				if (finalize.allowGeo == true) {
 					finalize.allowGeo = false;
-					$(this).val('Add my geolocation');
+					$(this).val('Geolocation OFF');
+				} else {
+					finalize.allowGeo = true;
+					$(this).val('Geolocation ON');
 				}
 			});
 
@@ -58,8 +59,6 @@ var finalize = {
 	},
 
 	make: function() {
-		// turn off onbeforeunload page warning
-		// remove selected class
 
 		// remove resize handles
 		$(".mainMenu").find(".ui-resizable-handle").remove();
@@ -95,5 +94,5 @@ var finalize = {
 	        });
 	    }});
 	}
-	
+
 };

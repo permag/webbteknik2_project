@@ -1,3 +1,6 @@
+h1 {
+	margin-bottom: 20px;
+}
 h3 {
 	font-size: 18px;
 	padding: 7px 0 0 0;
@@ -6,16 +9,22 @@ h3 {
 	clear: both;
 }
 input {
-	width: 175px;
+	width: 169px;
+	margin-right: 7px;
 }
-.container {
+.navbar .container, .container {
 	width: 761px;
+}
+.main {
+	margin-bottom: 9px;
 }
 .leftMenu {
 	float: left;
 	border: 2px solid black;
-	width: 250px;
+	width: 233px;
 	margin-right: 25px;
+	margin-bottom: 20px;
+	padding: 0 9px;
 }
 .mainMenu {
 	float: left;
@@ -51,10 +60,10 @@ input {
 	max-height: 300px;
 }
 #searchPhotosArea {
-	text-align: center;
+	padding: 7px;
 }
 .photoSrc {
-	width: 50px;
+	width: 47px;
 	cursor: move;
 	border: 2px solid transparent;
 	float: left;
@@ -64,13 +73,13 @@ input {
 }
 #searchQuoteTagArea {
 	padding: 7px;
-	font-weight: bold;
-	font-style: italic;
 }
 .quotesList {
 	cursor: pointer;
 	padding: 5px 3px;
 	margin-bottom: 2px;
+	font-weight: bold;
+	font-style: italic;
 }
 .quotesList:hover {
 	background: rgba(100,100,100,0.3);
@@ -79,6 +88,12 @@ input {
 	margin-left: 25px;
 	width: 392px;
 	min-height: 99px;
+}
+#editQuoteButtons {
+	margin-left: 20px;
+}
+#saveQuoteEdit, #cancelQuoteEdit {
+	margin: 5px 0 9px 7px;
 }
 .activeArea {
 	background: rgba(200,200,200,0.7) !important;
@@ -117,4 +132,18 @@ input {
 	display: none;
 	background: rgba(100,100,100,0.8);
 	text-align: center;
+}
+.profilePic {
+	padding-right: 7px;
+}
+.profileName {
+}
+.profilePicInFrame {
+	display: none;
+}
+#logoutLink {
+	margin-left: 30px;
+}
+.loadingAjaxText {
+	padding: 5px 7px;
 }

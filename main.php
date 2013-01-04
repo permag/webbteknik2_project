@@ -1,11 +1,14 @@
 <?php
 require 'src/facebook.php';
 require_once('fb.php');
+require_once('model/FacebookStatus.php');
 
 if (!$user) {
 	header('location: index.php');
 }
 
+$facebookStatus = new FacebookStatus();
+$facebookStatusLatest = $facebookStatus->getLatest();
 
 ?>
 <!doctype html>
@@ -48,10 +51,10 @@ if (!$user) {
 
 		<div class="container main">
 		<?php
-			if ($user) {
-				echo '<img src="https://graph.facebook.com/'.$user.'/picture">';
-				echo $user_profile['first_name'] . ' ' . $user_profile['last_name'];
-			}
+          if ($user) {
+            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">';
+            echo '<span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>';
+          }
 		?>
 		</div>
 
@@ -60,19 +63,19 @@ if (!$user) {
 			<div class="leftMenu">
 				<h3>PHOTOS</h3>
 				<input type="text" id="searchPhotoTag" class="pull-left" />
-				<button id="searchPhotoTagButton" class="pull-left">Find</button>
+				<button id="searchPhotoTagButton" class="btn pull-left"><span class="icon-search"></span></button>
 				<div id="searchPhotosArea"></div>
 
 				<h3>QUOTES</h3>
 				<input type="text" id="searchQuoteTag" class="pull-left" />
-				<button id="searchQuoteTagButton" class="pull-left">Find</button>
+				<button id="searchQuoteTagButton" class="btn pull-left"><span class="icon-search"></span></button>
 				<div id="searchQuoteTagArea"></div>
 			</div>
 
 			<div class="mainMenu">
 				<div id="alster">
-					<div id="alsterPhotoFrameBorder"><div id="alsterPhotoFrame"></div></div>
-					<div id="alsterQuoteFrame">"Uno var en cool revisor." -The Uno</div>
+					<div id="alsterPhotoFrameBorder"><div id="alsterPhotoFrame"><?php echo '<div id="droppedPhoto"><img src="https://graph.facebook.com/'.$user.'/picture?type=large" class="profilePicInFrame"></div>';  ?></div></div>
+					<div id="alsterQuoteFrame">"<?php echo $facebookStatusLatest ?>" <br />- <?php echo ($user_profile['first_name'] . ' ' . $user_profile['last_name']); ?></div>
 				</div>
 				<button id="finalize" class="btn btn-large btn-primary pull-right">FINALIZE</button>
 			</div>

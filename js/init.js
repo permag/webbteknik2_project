@@ -3,6 +3,7 @@ var init = {
 	getPhotos: function() {
 		var searchPhotoTag = $("#searchPhotoTag");
 		var searchPhotosArea = $("#searchPhotosArea");
+		searchPhotosArea.html('Searching...');
 
 		$.ajax({
 		    url: "model/getPhotos.php",
@@ -40,7 +41,6 @@ var init = {
 			drop: function(ev, ui) {
 				var droppedItem = $(ui.draggable).clone();
 
-
 				if (droppedItem.hasClass("photoSrc")) {
 					// delete old image in photo frame
 					if ($(this).find('img').length > 0) {
@@ -52,62 +52,68 @@ var init = {
 					var fileName = droppedItem.attr("src"); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1_t.jpg
 					var newFileName = fileName.replace("_t", ""); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1.jpg
 
-					// copy api image to webserver
-					$.ajax({
-						url: 'model/copyImage.php',
-						type: 'GET',
-						data: { imageUrl: newFileName },
-						success: function(data){
-							newFileName = './temp_image/'+ data;
-
-							var photo = $("<div id='droppedPhoto' class='droppedPhotoExists'></div>");
-							dropTo.append(photo);
-							var droppedPhoto = $('#droppedPhoto');
-
-							// new image element. image is appended once img file is finisedhttp://farm9.static.flickr.com/8220/8333449533_80b48fc18e.jpg loading.
-							var img = $("<img />").attr("src", newFileName);
-							img.load(function() {
-								//ajaxLoader.remove();
-								droppedPhoto.append(img);
-
-								var image = droppedPhoto.find("img");
-
-								// adjust image to cover entire template photo frame
-								if (image.width() < dropTo.width() || image.width() > dropTo.width()) {
-									image.css({ width: dropTo.width() + 4 });
-								} 
-								if (image.height() < dropTo.height() + 4) {
-									while (image.height() < dropTo.height() + 4) {
-										image.css({ height: image.height() * 1.05, width: image.width() * 1.05 });
-									}
-								}
-								// center image horizontal
-								if (image.width() > dropTo.width()) {
-									var widthDiff = dropTo.width() - image.width(); // negative value
-									droppedPhoto.css({ left: parseInt((widthDiff) / 2) });
-								}
-
-								// resizable after img is loaded
-								img.resizable({
-									aspectRatio: true,
-									autoHide: true,
-									handles: "all"
-								});
-
-								// make draggable in place
-								droppedPhoto.draggable({
-									cursor: "move"
-								});
-							});
-						}
-					});
+					init.saveImage(dropTo, newFileName);
 				}
+			}
+		});
+	},
+
+	saveImage: function(dropTo, newFileName){
+		dropTo.html('<div class="loadingAjaxText">Loading image...</div>');
+		$.ajax({
+			url: 'model/copyImage.php',
+			type: 'GET',
+			cache: false,
+			data: { imageUrl: newFileName },
+			success: function(data){
+				newFileName = './temp_image/'+ data + '?rand='+ Math.floor((Math.random()*999999999)+1);;
+
+				var photo = $("<div id='droppedPhoto' class='droppedPhotoExists'></div>");
+				dropTo.html(photo);
+				var droppedPhoto = $('#droppedPhoto');
+
+				// new image element. image is appended once img file is finisedhttp://farm9.static.flickr.com/8220/8333449533_80b48fc18e.jpg loading.
+				var img = $("<img />").attr("src", newFileName);
+				img.load(function() {
+					droppedPhoto.append(img);
+
+					var image = droppedPhoto.find("img");
+
+					// adjust image to cover entire photo area
+					if (image.width() < dropTo.width() || image.width() > dropTo.width()) {
+						image.css({ width: dropTo.width() + 4 });
+					} 
+					if (image.height() < dropTo.height() + 4) {
+						while (image.height() < dropTo.height() + 4) {
+							image.css({ height: image.height() * 1.05, width: image.width() * 1.05 });
+						}
+					}
+					// center image horizontal
+					if (image.width() > dropTo.width()) {
+						var widthDiff = dropTo.width() - image.width(); // negative value
+						droppedPhoto.css({ left: parseInt((widthDiff) / 2) });
+					}
+
+					// resizable after img is loaded
+					img.resizable({
+						aspectRatio: true,
+						autoHide: true,
+						handles: "all"
+					});
+
+					// make draggable in place
+					droppedPhoto.draggable({
+						cursor: "move"
+					});
+				});
 			}
 		});
 	},
 
 	getQuotes: function() {
 		var searchQuoteTag = $('#searchQuoteTag');
+		var searchQuoteTagArea = $('#searchQuoteTagArea');
+		searchQuoteTagArea.html('Searching...');
 		
 		$.ajax({
 		    url: "http://www.stands4.com/services/v2/quotes.php?uid=2543&tokenid=Xor0DOW0C4Ag1Iay&searchtype=AUTHOR&query=" + searchQuoteTag.val(),
@@ -125,13 +131,14 @@ var init = {
 					output += '<div class="quotesList">\"'+ quote + '\" <br /> - ' + author +'</div>';
 				});
 		    	
-		    	$('#searchQuoteTagArea').html(output);
+		    	searchQuoteTagArea.html(output);
 
 		    	$('.quotesList').click(function(e){
 		    		$('#alsterQuoteFrame').html($(this).html());
 		    	});
 		    },
 		    error: function() {
+		    	searchQuoteTagArea.html('Error.');
 		    }
 		});
 	},
@@ -142,13 +149,17 @@ var init = {
 		quote = quote.replace(/<br\s*[\/]?>/gi, '\n');
 
 		quoteFrame.hide();
-		quoteFrame.parent().append('<textarea id="editQuoteTextarea">'+ quote +'</textarea><button id="saveQuoteEdit">Save</button>');
+		quoteFrame.parent().append('<textarea id="editQuoteTextarea">'+ quote +'</textarea><div id="editQuoteButtons"><button id="saveQuoteEdit" class="btn btn-primary">Save</button><button id="cancelQuoteEdit" class="btn">Cancel</button></div>');
 
 		$('#saveQuoteEdit').click(function(e){
 			var text = $('#editQuoteTextarea').val();
 			text = text.replace(/\n/g, '<br />');
 			quoteFrame.html(text).show();
-			$('#editQuoteTextarea, #saveQuoteEdit').remove();
+			$('#editQuoteTextarea, #editQuoteButtons').remove();
+		});
+		$('#cancelQuoteEdit').click(function(e){
+			quoteFrame.show();
+			$('#editQuoteTextarea, #editQuoteButtons').remove();
 		});
 	},
 
@@ -166,16 +177,43 @@ var init = {
 };
 
 $(function() {
+	// profile pic
+	var alsterPhotoFrame = $('#alsterPhotoFrame');
+	var imageSrc = alsterPhotoFrame.find('img').attr('src');
+	init.saveImage(alsterPhotoFrame, imageSrc);
+
+	// photo border edit
+	$('#alsterPhotoFrameBorder').resizable({
+		containment: 'parent',
+		handles: 's',
+		maxHeight: 500,
+		minHeight: 50
+	});
+	// photo
+	$("#searchPhotoTag").focus();
 	$("#searchPhotoTagButton").click(function(e){
 		init.getPhotos();
 		init.drop();
 	});
+	$("#searchPhotoTag").keyup(function(event){
+	    if(event.keyCode == 13){
+	        $("#searchPhotoTagButton").click();
+	    }
+	});
+	// quote
 	$('#searchQuoteTagButton').click(function(e){
 		init.getQuotes();
 	});
+	$("#searchQuoteTag").keyup(function(event){
+	    if(event.keyCode == 13){
+	        $("#searchQuoteTagButton").click();
+	    }
+	});
+	// edit quote
 	$('#alsterQuoteFrame').click(function(e){
 		init.editQuote();
 	});
+	// finalize
 	$('#finalize').click(function(e){
 		finalize.preMake();
 	});

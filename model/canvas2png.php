@@ -10,6 +10,8 @@
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
         $tempImg = $_POST['tempImg'];
+        $tempImg = explode('?',$tempImg);
+        $tempImg = $tempImg[0];
         $memberId = $_SESSION['activeUserId'];
         $img = str_replace('data:image/png;base64,', '', $img);
         $data = base64_decode($img);

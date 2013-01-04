@@ -147,7 +147,7 @@ if ($user) {
       if ($user) {
         ?>
         <h4>My stuff <span id="deleteAlsterSpan"><a href="#" id="deleteAlster"><p class="icon-trash" title="Toggle trash can"></p></a></span></h4>
-        <div id="trash">Drag here to delete</div>
+        <div id="trash">Drag and drop here to delete</div>
         <div id="myStuff">
         <?php
           $myAlsterId = 0;
@@ -167,16 +167,16 @@ if ($user) {
       <?php if ($user): ?>
         <?php
           if ($user) {
-            echo '<img src="https://graph.facebook.com/'.$user.'/picture">';
-            echo $user_profile['first_name'] . ' ' . $user_profile['last_name'];
+            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">';
+            echo '<span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>';
           }
         ?>
-        <a href="#" id="logoutLink">Logout</a>
+        <button id="logoutLink" class="btn">Logout</button>
       <?php endif ?>
 
       <?php if (!$user): ?>
         <strong><em>Login using your Facebook account: </em></strong>
-        <a href="#" id="loginLink">Login</a>
+        <button id="loginLink" class="btn">Login</button>
       <?php endif ?>
     </div>
 

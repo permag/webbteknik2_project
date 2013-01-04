@@ -34,7 +34,7 @@
             $output .= "<img class=\"photoSrc\" src='$photourl' />";
         }
     } else {
-        $output .= "No photos found!\n";
+        $output .= "<div>No photos found.</div>";
     }
 
     echo $output;
