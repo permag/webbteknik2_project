@@ -1,11 +1,11 @@
 <?php
-	session_start();
-
 	class FacebookStatus {
 
 		public function getLatest() {
-			$externamUserId = $_SESSION['activeUserId'];
-			$status = file_get_contents('https://graph.facebook.com/'.$externamUserId.'/statuses?access_token=AAACEdEose0cBAPBscI9qpz9RHShCKOyQjlONpujQ6mqEb4DAGFdBuE3lOaNqKHVcIMhwsb4pcgcHVcmNiefXiPRnrecPjdy4LtNCuiCLqu23H4PZB');
+			$access_token = $_SESSION['fb_431206723613188_access_token'];
+			$externalUserId = $_SESSION['activeUserId'];
+
+			$status = file_get_contents('https://graph.facebook.com/me/statuses?limit=1&access_token='.$access_token);
 			$statuses = json_decode($status);
 
 			foreach ($statuses->data as $data) {

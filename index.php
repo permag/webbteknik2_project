@@ -83,13 +83,14 @@ if ($user) {
 
       function login() {
           FB.login(function(response) {
-              if (response.authResponse) {
-                  // connected
-                  testAPI();
-              } else {
-                  // cancelled
-              }
-          });
+            if (response.authResponse) {
+                // connected
+                testAPI();
+            } else {
+                // cancelled
+            }
+          }, { scope: 'read_stream,user_status,user_about_me' });
+
       }
 
       function testAPI() {

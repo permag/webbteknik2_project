@@ -6,9 +6,13 @@ require_once('model/FacebookStatus.php');
 if (!$user) {
 	header('location: index.php');
 }
+// print_r($facebook->api("/me/permissions"));
 
 $facebookStatus = new FacebookStatus();
 $facebookStatusLatest = $facebookStatus->getLatest();
+if ($facebookStatusLatest == '') {
+	$facebookStatusLatest = 'This is my favorite quote.';
+}
 
 ?>
 <!doctype html>
