@@ -4,6 +4,22 @@ var init = {
 	quoteHistoryPosition: 0,
 	prevQuoteTag: '',
 
+	history: function() {
+		//sessionStorage.clear()
+		if (typeof(Storage) !== 'undefined') {
+			if (sessionStorage.quoteHistorySession != null) {
+				var history = JSON.parse(sessionStorage.quoteHistorySession);
+				init.quoteHistoryArray = history;
+
+				if (init.quoteHistoryArray.length > 0) {
+
+				}
+
+				init.quoteHistory($('#searchQuoteTagArea'));
+			}		
+		}
+	},
+
 	getPhotos: function() {
 		var searchPhotoTag = $("#searchPhotoTag");
 		if ($.trim(searchPhotoTag.val()) == '') {
@@ -153,69 +169,80 @@ var init = {
 					$('#alsterQuoteFrame').html($(this).html());
 				});
 
-				// history back and forward
+				// add history
 				if (searchQuoteTag.val() != init.prevQuoteTag) {
 					init.prevQuoteTag = searchQuoteTag.val(); // for next round
-					init.quoteHistoryArray.push(output);
-				}
-
-				if (init.quoteHistoryArray.length > 1) {
-					init.quoteHistoryPosition = init.quoteHistoryArray.length - 1;
-					$('#historyButtons').html('<button id="historyBack" class="btn btn-mini"> < </button> <button id="historyForward" class="btn btn-mini"> > </button>');
-					if (init.quoteHistoryPosition == 0) {
-						$('#historyBack').attr('disabled', 'disabled');
-					}
-					if (init.quoteHistoryPosition == init.quoteHistoryArray.length - 1) {
-						$('#historyForward').attr('disabled', 'disabled');
-					}
-
-					// Back
-					$('#historyBack').click(function(){
-						init.quoteHistoryPosition--;
-						if (init.quoteHistoryPosition == 0) {
-							$(this).attr('disabled', 'disabled');
-						} else {
-							$(this).removeAttr('disabled');
-						}
-						if (init.quoteHistoryPosition == init.quoteHistoryArray.length - 1) {
-							$('#historyForward').attr('disabled', 'disabled');
-						} else {
-							$('#historyForward').removeAttr('disabled');
-						}
-						addHistoryToArea();
-					});
-					// Forward
-					$('#historyForward').click(function(){
-						init.quoteHistoryPosition++;
-						if (init.quoteHistoryPosition == init.quoteHistoryArray.length - 1) {
-							$(this).attr('disabled', 'disabled');
-						} else {
-							$(this).removeAttr('disabled');
-						}
-						if (init.quoteHistoryPosition == 0) {
-							$('#historyBack').attr('disabled', 'disabled');
-						} else {
-							$('#historyBack').removeAttr('disabled');
-						}
-						addHistoryToArea();
-					});
-
-					function addHistoryToArea(){
-						var hist = init.quoteHistoryArray[ init.quoteHistoryPosition ];
-						searchQuoteTagArea.html(hist);
-						// add handler
-						$('.quotesList').click(function(e){
-							$('#alsterQuoteFrame').html($(this).html());
-						});
+					if (output !== null && output.indexOf('quotesList') !== -1) {
+						init.quoteHistoryArray.push(output);
 					}
 				}
 
+				// history back and forward
+				init.quoteHistory(searchQuoteTagArea, 1);
+
+				init.storeHistory();
 
 		    },
 		    error: function() {
 		    	searchQuoteTagArea.html('Error.');
 		    }
 		});
+	},
+
+	quoteHistory: function(searchQuoteTagArea, minusOne = null) {
+
+		init.quoteHistoryPosition = init.quoteHistoryArray.length - minusOne ;
+		if (init.quoteHistoryArray.length > 1) {
+			if ($('#historyBack').length > 0) {
+				return false;
+			}
+			$('#historyButtons').html('<button id="historyBack" class="btn btn-mini"> < </button> <button id="historyForward" class="btn btn-mini"> > </button>');
+			$('#historyForward').attr('disabled', 'disabled');
+			if (init.quoteHistoryPosition == 0) {
+				$('#historyBack').attr('disabled', 'disabled');
+			}
+
+			// Back
+			$('#historyBack').click(function(){
+				init.quoteHistoryPosition--;
+				buttons($(this), $('#historyForward'));
+			});
+			// Forward
+			$('#historyForward').click(function(){
+				init.quoteHistoryPosition++;
+				buttons($('#historyBack'), $(this));
+			});
+
+			function buttons(back, forward) {
+				if (init.quoteHistoryPosition >= init.quoteHistoryArray.length - 1) {
+					forward.attr('disabled', 'disabled');
+				} else {
+					forward.removeAttr('disabled');
+				}
+				if (init.quoteHistoryPosition <= 0) {
+					back.attr('disabled', 'disabled');
+				} else {
+					back.removeAttr('disabled');
+				}
+				addHistoryToArea();
+			}
+
+			function addHistoryToArea(){
+				var hist = init.quoteHistoryArray[ init.quoteHistoryPosition ];
+				searchQuoteTagArea.html(hist);
+				// add handler
+				$('.quotesList').click(function(e){
+					$('#alsterQuoteFrame').html($(this).html());
+				});
+			}
+		}
+	},
+
+	storeHistory: function() {
+		// store new quote data in sessionStorage
+		if (typeof(Storage) !== 'undefined'){
+			sessionStorage.quoteHistorySession = JSON.stringify(init.quoteHistoryArray);
+		}
 	},
 
 	editQuote: function() {
@@ -253,8 +280,10 @@ var init = {
 
 $(function() {
 
-	// init droppable
+	// init
+	init.history();
 	init.drop();
+
 	// profile pic
 	var alsterPhotoFrame = $('#alsterPhotoFrame');
 	var imageSrc = alsterPhotoFrame.find('img').attr('src');

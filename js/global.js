@@ -54,6 +54,6 @@ $(function(){
 			localStorage.mapCenter = map.getCenter();
 			localStorage.mapZoom = map.getZoom();
 		}
-  	}); 
+	}); 
 
 });
