@@ -1,7 +1,14 @@
 var init = {
 
+	quoteHistoryArray: [],
+	quoteHistoryPosition: 0,
+	prevQuoteTag: '',
+
 	getPhotos: function() {
 		var searchPhotoTag = $("#searchPhotoTag");
+		if ($.trim(searchPhotoTag.val()) == '') {
+			return false;
+		}
 		var searchPhotosArea = $("#searchPhotosArea");
 		searchPhotosArea.html('Searching...');
 
@@ -13,6 +20,12 @@ var init = {
 		    success: function(data) {
 		    	searchPhotosArea.html(data);
 		    	init.drag();
+
+		    	$('.photoSrc').dblclick(function(){
+		    		var dropTo = $('#alsterPhotoFrame');
+		    		var image = $(this).attr('src').replace('_t', '');;
+		    		init.saveImage(dropTo, image);
+		    	});
 		    },
 		    error: function() {
 		    	searchPhotosArea.html('Error.');
@@ -49,8 +62,8 @@ var init = {
 					}
 					$(this).empty(); // if templatePhoto already contains div/img, replace with new.
 
-					var fileName = droppedItem.attr("src"); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1_t.jpg
-					var newFileName = fileName.replace("_t", ""); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1.jpg
+					var fileName = droppedItem.attr('src'); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1_t.jpg
+					var newFileName = fileName.replace('_t', ''); // http://farm9.static.flickr.com/8223/8329899699_4fa389e7a1.jpg
 
 					init.saveImage(dropTo, newFileName);
 				}
@@ -112,6 +125,9 @@ var init = {
 
 	getQuotes: function() {
 		var searchQuoteTag = $('#searchQuoteTag');
+		if ($.trim(searchQuoteTag.val()) == '') {
+			return false;
+		}
 		var searchQuoteTagArea = $('#searchQuoteTagArea');
 		searchQuoteTagArea.html('Searching...');
 		
@@ -133,9 +149,68 @@ var init = {
 		    	
 		    	searchQuoteTagArea.html(output);
 
-		    	$('.quotesList').click(function(e){
-		    		$('#alsterQuoteFrame').html($(this).html());
-		    	});
+				$('.quotesList').click(function(e){
+					$('#alsterQuoteFrame').html($(this).html());
+				});
+
+				// history back and forward
+				if (searchQuoteTag.val() != init.prevQuoteTag) {
+					init.prevQuoteTag = searchQuoteTag.val(); // for next round
+					init.quoteHistoryArray.push(output);
+				}
+
+				if (init.quoteHistoryArray.length > 1) {
+					init.quoteHistoryPosition = init.quoteHistoryArray.length - 1;
+					$('#historyButtons').html('<button id="historyBack" class="btn btn-mini"> < </button> <button id="historyForward" class="btn btn-mini"> > </button>');
+					if (init.quoteHistoryPosition == 0) {
+						$('#historyBack').attr('disabled', 'disabled');
+					}
+					if (init.quoteHistoryPosition == init.quoteHistoryArray.length - 1) {
+						$('#historyForward').attr('disabled', 'disabled');
+					}
+
+					// Back
+					$('#historyBack').click(function(){
+						init.quoteHistoryPosition--;
+						if (init.quoteHistoryPosition == 0) {
+							$(this).attr('disabled', 'disabled');
+						} else {
+							$(this).removeAttr('disabled');
+						}
+						if (init.quoteHistoryPosition == init.quoteHistoryArray.length - 1) {
+							$('#historyForward').attr('disabled', 'disabled');
+						} else {
+							$('#historyForward').removeAttr('disabled');
+						}
+						addHistoryToArea();
+					});
+					// Forward
+					$('#historyForward').click(function(){
+						init.quoteHistoryPosition++;
+						if (init.quoteHistoryPosition == init.quoteHistoryArray.length - 1) {
+							$(this).attr('disabled', 'disabled');
+						} else {
+							$(this).removeAttr('disabled');
+						}
+						if (init.quoteHistoryPosition == 0) {
+							$('#historyBack').attr('disabled', 'disabled');
+						} else {
+							$('#historyBack').removeAttr('disabled');
+						}
+						addHistoryToArea();
+					});
+
+					function addHistoryToArea(){
+						var hist = init.quoteHistoryArray[ init.quoteHistoryPosition ];
+						searchQuoteTagArea.html(hist);
+						// add handler
+						$('.quotesList').click(function(e){
+							$('#alsterQuoteFrame').html($(this).html());
+						});
+					}
+				}
+
+
 		    },
 		    error: function() {
 		    	searchQuoteTagArea.html('Error.');
@@ -177,6 +252,9 @@ var init = {
 };
 
 $(function() {
+
+	// init droppable
+	init.drop();
 	// profile pic
 	var alsterPhotoFrame = $('#alsterPhotoFrame');
 	var imageSrc = alsterPhotoFrame.find('img').attr('src');
@@ -193,10 +271,9 @@ $(function() {
 	$("#searchPhotoTag").focus();
 	$("#searchPhotoTagButton").click(function(e){
 		init.getPhotos();
-		init.drop();
 	});
 	$("#searchPhotoTag").keyup(function(event){
-	    if(event.keyCode == 13){
+	    if(event.keyCode == 13){ // enter key
 	        $("#searchPhotoTagButton").click();
 	    }
 	});
@@ -205,7 +282,7 @@ $(function() {
 		init.getQuotes();
 	});
 	$("#searchQuoteTag").keyup(function(event){
-	    if(event.keyCode == 13){
+	    if(event.keyCode == 13){ // enter key
 	        $("#searchQuoteTagButton").click();
 	    }
 	});

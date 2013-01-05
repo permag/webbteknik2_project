@@ -107,6 +107,7 @@ input {
 
 #myStuff {
 	width: 300px;
+	display: none;
 }
 #myStuff img {
 	border: 3px solid transparent;
@@ -146,4 +147,9 @@ input {
 }
 .loadingAjaxText {
 	padding: 5px 7px;
+}
+#historyButtons {
+	display: block;
+	float: left;
+	width: 100%;
 }

@@ -1,5 +1,5 @@
 var home = {
-	
+
 	deleteAlster: function() {
 		if ($('#trash').css('display') == 'none') {
 			$('.myAlster').draggable({
@@ -28,7 +28,7 @@ var home = {
 							type: 'GET',
 							data: { alsterId: alsterId, imgUrl: imgUrl },
 							success: function(data){
-
+								home.masonry($('#myStuff'), '.myAlster');
 							}
 						});
 					}
@@ -38,6 +38,16 @@ var home = {
 			$('.myAlster').draggable('destroy')
 		}
 		$('#trash').slideToggle('slow');
+	},
+
+	masonry: function(container, item) {
+		var $container = container;
+		$container.imagesLoaded(function(){
+			$container.masonry({
+				itemSelector : item
+			});
+		});
+		$container.show()
 	}
 };
 
@@ -46,4 +56,8 @@ $(function(){
 		home.deleteAlster();
 		e.preventDefault();
 	});
+
+	// masonry on my stuff
+	home.masonry($('#myStuff'), '.myAlster');
+
 });

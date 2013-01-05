@@ -73,6 +73,7 @@ if ($facebookStatusLatest == '') {
 				<h3>QUOTES</h3>
 				<input type="text" id="searchQuoteTag" class="pull-left" />
 				<button id="searchQuoteTagButton" class="btn pull-left"><span class="icon-search"></span></button>
+				<div id="historyButtons"></div>
 				<div id="searchQuoteTagArea"></div>
 			</div>
 
