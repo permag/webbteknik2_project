@@ -46,11 +46,18 @@ require_once('fb.php');
 		<div id="map"></div>
 		<div id="shareDialog"></div>
 
+		<script>
+			var tool = { activeUserId: 0 };
+			$(function(){
+				tool.activeUserId = <?php echo $_SESSION['activeUserId']; ?>;
+			});
+		</script>
 
 		<!-- JavaScript files -->
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script src="js/oms.min.js"></script>
 		<script src="js/global.js"></script>
 	</body>
 </html>

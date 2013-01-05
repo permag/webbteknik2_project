@@ -1,19 +1,19 @@
 var init = {
 
+	activeUserId: 0,
 	quoteHistoryArray: [],
 	quoteHistoryPosition: 0,
 	prevQuoteTag: '',
+	quoteHistorySessionName: '',
 
 	history: function() {
 		//sessionStorage.clear()
+		init.quoteHistorySessionName = 'quoteHistorySession' + init.activeUserId;
+
 		if (typeof(Storage) !== 'undefined') {
-			if (sessionStorage.quoteHistorySession != null) {
-				var history = JSON.parse(sessionStorage.quoteHistorySession);
+			if (sessionStorage[init.quoteHistorySessionName] != null) {
+				var history = JSON.parse(sessionStorage[init.quoteHistorySessionName]);
 				init.quoteHistoryArray = history;
-
-				if (init.quoteHistoryArray.length > 0) {
-
-				}
 
 				init.quoteHistory($('#searchQuoteTagArea'));
 			}		
@@ -141,14 +141,16 @@ var init = {
 
 	getQuotes: function() {
 		var searchQuoteTag = $('#searchQuoteTag');
+		var searchtype = 'AUTHOR';
 		if ($.trim(searchQuoteTag.val()) == '') {
+			//searchtype = 'RANDOM';
 			return false;
 		}
 		var searchQuoteTagArea = $('#searchQuoteTagArea');
 		searchQuoteTagArea.html('Searching...');
 		
 		$.ajax({
-		    url: "http://www.stands4.com/services/v2/quotes.php?uid=2543&tokenid=Xor0DOW0C4Ag1Iay&searchtype=AUTHOR&query=" + searchQuoteTag.val(),
+		    url: "http://www.stands4.com/services/v2/quotes.php?uid=2543&tokenid=Xor0DOW0C4Ag1Iay&searchtype=" + searchtype + "&query=" + searchQuoteTag.val(),
 		    type: "GET",
 		    dataType: 'XML',
 		    cache: true,
@@ -241,7 +243,7 @@ var init = {
 	storeHistory: function() {
 		// store new quote data in sessionStorage
 		if (typeof(Storage) !== 'undefined'){
-			sessionStorage.quoteHistorySession = JSON.stringify(init.quoteHistoryArray);
+			sessionStorage[init.quoteHistorySessionName] = JSON.stringify(init.quoteHistoryArray);
 		}
 	},
 
@@ -251,7 +253,7 @@ var init = {
 		quote = quote.replace(/<br\s*[\/]?>/gi, '\n');
 
 		quoteFrame.hide();
-		quoteFrame.parent().append('<textarea id="editQuoteTextarea">'+ quote +'</textarea><div id="editQuoteButtons"><button id="saveQuoteEdit" class="btn btn-primary">Save</button><button id="cancelQuoteEdit" class="btn">Cancel</button></div>');
+		quoteFrame.parent().append('<textarea id="editQuoteTextarea" maxlength="1999">'+ quote +'</textarea><div id="editQuoteButtons"><button id="saveQuoteEdit" class="btn btn-primary">Save</button><button id="cancelQuoteEdit" class="btn">Cancel</button></div>');
 
 		$('#saveQuoteEdit').click(function(e){
 			var text = $('#editQuoteTextarea').val();

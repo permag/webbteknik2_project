@@ -88,6 +88,11 @@ if ($facebookStatusLatest == '') {
 		</div>
 		
 		<div id="finalizeDialog"></div>
+		<script>
+			$(function(){
+				init.activeUserId = <?php echo $user; ?>
+			});
+		</script>
 
 		<!-- JavaScript files -->
 		<script src="http://code.jquery.com/jquery-latest.js"></script>

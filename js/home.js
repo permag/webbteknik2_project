@@ -20,9 +20,9 @@ var home = {
 					var toRemove = droppedItem.attr('id');
 					droppedItem.remove()
 					var removeConfirm = confirm('Are you sure you wish to delete this?');
-					if (removeConfirm) {
+					if (removeConfirm) {	
 						$('#'+toRemove+'').remove();
-
+						
 						$.ajax({
 							url: 'model/deleteAlster.php',
 							type: 'GET',
@@ -44,7 +44,8 @@ var home = {
 		var $container = container;
 		$container.imagesLoaded(function(){
 			$container.masonry({
-				itemSelector : item
+				itemSelector : item,
+				columnWidth: 109
 			});
 		});
 		$container.show()
