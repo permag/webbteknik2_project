@@ -15,7 +15,7 @@ var init = {
 				var history = JSON.parse(sessionStorage[init.quoteHistorySessionName]);
 				init.quoteHistoryArray = history;
 
-				init.quoteHistory($('#searchQuoteTagArea'));
+				init.quoteHistory($('#searchQuoteTagArea'), null);
 			}		
 		}
 	},
@@ -42,6 +42,8 @@ var init = {
 		    		var image = $(this).attr('src').replace('_t', '');;
 		    		init.saveImage(dropTo, image);
 		    	});
+		    	
+		    	//init.masonry(searchPhotosArea, '.photoSrc');
 		    },
 		    error: function() {
 		    	searchPhotosArea.html('Error.');
@@ -109,11 +111,10 @@ var init = {
 					var image = droppedPhoto.find("img");
 
 					// adjust image to cover entire photo area
-					if (image.width() < dropTo.width() || image.width() > dropTo.width()) {
-						image.css({ width: dropTo.width() + 4 });
-					} 
-					if (image.height() < dropTo.height() + 4) {
-						while (image.height() < dropTo.height() + 4) {
+					image.css({ width: dropTo.width() + 6 });
+
+					if (image.height() < dropTo.height() + 6) {
+						while (image.height() < dropTo.height() + 6) {
 							image.css({ height: image.height() * 1.05, width: image.width() * 1.05 });
 						}
 					}
@@ -121,6 +122,11 @@ var init = {
 					if (image.width() > dropTo.width()) {
 						var widthDiff = dropTo.width() - image.width(); // negative value
 						droppedPhoto.css({ left: parseInt((widthDiff) / 2) });
+					}
+
+					if (image.height() > dropTo.height()) {
+						var heightDiff = dropTo.height() - image.height(); // negative value
+						droppedPhoto.css({ top: parseInt((heightDiff) / 3) });
 					}
 
 					// resizable after img is loaded
@@ -191,7 +197,7 @@ var init = {
 		});
 	},
 
-	quoteHistory: function(searchQuoteTagArea, minusOne = null) {
+	quoteHistory: function(searchQuoteTagArea, minusOne) {
 
 		init.quoteHistoryPosition = init.quoteHistoryArray.length - minusOne ;
 		if (init.quoteHistoryArray.length > 1) {
@@ -275,6 +281,15 @@ var init = {
 			success: function(data){
 
 			}
+		});
+	},
+
+	masonry: function(container, item) {
+		var $container = container;
+		$container.imagesLoaded(function(){
+			$container.masonry({
+				itemSelector : item
+			});
 		});
 	}
 

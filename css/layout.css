@@ -40,11 +40,12 @@ input {
 	width: 400px;
 	height: 260px;
 	margin: 25px;
+	overflow: hidden;
 }
 #alsterPhotoFrame {
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
+	cursor: move;
 }
 #alsterQuoteFrame {
 	width: 400px;
@@ -59,20 +60,19 @@ input {
 	overflow: auto;
 	max-height: 300px;
 }
-#searchPhotosArea {
+#searchPhotosArea, #searchQuoteTagArea {
 	padding: 7px;
+	width: 220px;
 }
 .photoSrc {
 	width: 47px;
+	height: 50px;
 	cursor: move;
 	border: 2px solid transparent;
 	float: left;
 }
 .photoSrc:hover {
 	border-color: gray;	 
-}
-#searchQuoteTagArea {
-	padding: 7px;
 }
 .quotesList {
 	cursor: pointer;
@@ -116,7 +116,7 @@ input {
 	border-color: rgba(200,200,200, 0.7);
 }
 #droppedPhoto {
-	position: relative;
+	position: absolute;
 }
 #finalize {
 	margin: 15px 5px;

@@ -7,7 +7,7 @@ require_once('fb.php');
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+		<!-- <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' /> -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="css/basic.css">
@@ -49,7 +49,12 @@ require_once('fb.php');
 		<script>
 			var tool = { activeUserId: 0 };
 			$(function(){
-				tool.activeUserId = <?php echo $_SESSION['activeUserId']; ?>;
+				var activeUserId = '<?php echo $_SESSION['activeUserId']; ?>';
+				if (activeUserId == null || activeUserId == '') {
+					tool.activeUserId = 1;
+				} else {
+					tool.activeUserId = activeUserId;
+				}
 			});
 		</script>
 
