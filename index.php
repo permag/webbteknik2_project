@@ -87,15 +87,14 @@ if ($user) {
       ?>
       </div>
 
-      <?php if ($user): ?>
         <?php
           if ($user) {
             echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">';
             echo '<span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>';
+            echo '<button id="logoutLink" class="btn btn-mini">Logout</button>';
+            echo '<a href="main.php" id="createButton" class="btn btn-large btn-primary">Start creating!</a>';
           }
         ?>
-        <button id="logoutLink" class="btn">Logout</button>
-      <?php endif ?>
 
       <?php if (!$user): ?>
         <strong><em>Login using your Facebook account: </em></strong>

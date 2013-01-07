@@ -3,7 +3,7 @@
 	require_once('Database.php');
 
 	$alsterId = $_GET['alsterId'];
-	$imgUrl = $_GET['imgUrl'];
+	$imgUrl = basename($_GET['imgUrl']);
 	$externalUserId = $_SESSION['activeUserId'];
 
 	if (isset($externalUserId)) {
@@ -14,7 +14,7 @@
 		$param = array(':alsterId' => $alsterId, ':externalUserId' => $externalUserId); 
 		$ret = $db->delete($query, $param);
 		if ($ret > 0) {
-			unlink('../' . $imgUrl);
+			unlink('../alster/' . $imgUrl);
 			echo 1;
 		}
 	}
