@@ -89,10 +89,10 @@ if ($user) {
 
         <?php
           if ($user) {
-            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">';
-            echo '<span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>';
-            echo '<button id="logoutLink" class="btn btn-mini">Logout</button>';
-            echo '<a href="main.php" id="createButton" class="btn btn-large btn-primary">Start creating!</a>';
+            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">
+                  <span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>
+                  <button id="logoutLink" class="btn btn-mini">Logout</button>
+                  <a href="main.php" id="createButton" class="btn btn-large btn-primary">Start creating!</a>';
           }
         ?>
 

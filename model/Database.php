@@ -17,6 +17,7 @@
 				die('Error: ' . $e->getMessage());
 			}
 
+			// create aslter table
 			$query = "CREATE TABLE IF NOT EXISTS Alster 
 						(alsterId INTEGER PRIMARY KEY,
 						 externalUserId INTEGER,
@@ -28,7 +29,25 @@
 			try {
 				$stmt = $this->_pdo->prepare($query);
 				if (!$stmt->execute()) {
-					die('Error. Could not create table.');
+					die('Error. Could not create table ALSTER.');
+				}
+			}
+			catch (PDOException $e) {
+				die('Error. ' . $e->getMessage());
+			}
+
+			// create quote table
+			$query = "CREATE TABLE IF NOT EXISTS Quote 
+						(quoteId INTEGER PRIMARY KEY,
+						 searchTerm TEXT,
+						 quote TEXT,
+						 author TEXT,
+						 nextUpdate TEXT)";
+
+			try {
+				$stmt = $this->_pdo->prepare($query);
+				if (!$stmt->execute()) {
+					die('Error. Could not create table QUOTE.');
 				}
 			}
 			catch (PDOException $e) {

@@ -156,7 +156,9 @@ var init = {
 		searchQuoteTagArea.html('Searching...');
 		
 		$.ajax({
-		    url: "http://www.stands4.com/services/v2/quotes.php?uid=2543&tokenid=Xor0DOW0C4Ag1Iay&searchtype=" + searchtype + "&query=" + searchQuoteTag.val(),
+		    //url: "http://www.stands4.com/services/v2/quotes.php?uid=2543&tokenid=Xor0DOW0C4Ag1Iay&searchtype=" + searchtype + "&query=" + searchQuoteTag.val(),
+		    url: "model/getQuotes.php",
+		    data: { searchtype: searchtype, query: searchQuoteTag.val() },
 		    type: "GET",
 		    dataType: 'XML',
 		    cache: true,
