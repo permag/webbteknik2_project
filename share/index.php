@@ -37,6 +37,7 @@
 	<head>
 		<meta charset="utf-8" />
 		 <!-- CSS file -->
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../css/reset.css">
 		<link rel="stylesheet" type="text/css" href="../css/share.css">
 		<!-- Facebook-->
@@ -60,11 +61,22 @@
 		}(document, 'script', 'facebook-jssdk'));</script>
 		<!-- FB end -->
 
-		<div id="header">
-			<div id="leftContainer">
-				<div id="logo"><a href="../index.php">sillyPlay</a></div>
-			</div>
-		</div>
+	    <!-- NAVBAR -->
+	    <nav class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="navbar-inner">
+	        <div class="container">
+	          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="brand" href="../index.php">sillyPlay</a>
+	          <div class="nav-collapse collapse">
+	          </div>
+
+	        </div>
+	      </div>
+	    </nav>
 
 
 		<div id="shareContainer">

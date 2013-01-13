@@ -8,13 +8,10 @@
 		<title>sillyPlay</title>
 	</head>
 	<body>
-		<div id="header">
-			<div id="leftContainer">
-				<div id="logo"><a href="/"></a></div>
-			</div>
-		</div>
 		<div id="pageNotFoundDiv">
 			<h1>The requested page was not found :(</h1>
+			<br />
+			<a href="../index.php">-> sillyPlay</a>
 		</div>
 	</body>
 </html>

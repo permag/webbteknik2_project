@@ -56,8 +56,8 @@ if ($facebookStatusLatest == '') {
 		<div class="container main">
 		<?php
           if ($user) {
-            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">';
-            echo '<span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>';
+            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">
+            	  <span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>';
           }
 		?>
 		</div>

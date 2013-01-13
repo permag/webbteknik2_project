@@ -45,15 +45,11 @@ if ($user) {
           <a class="brand" href="./">sillyPlay</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <?php
-              if ($user) {
-            ?>
+            <?php if ($user) { ?>
               <li class="active"><a href="index.php">Home</a></li>
               <li class=""><a href="main.php">Create</a></li>
               <li class=""><a href="global.php">Global</a></li>
-            <?php
-              }
-              ?>
+            <?php } ?>
             </ul>
           </div>
 
@@ -63,25 +59,13 @@ if ($user) {
 
     <div class="container main">
 
-
-      <h1>sillyPlay</h1>
       <div class="continer pull-right">
       <?php
       if ($user) {
         ?>
         <h4>My stuff <span id="deleteAlsterSpan"><a href="#" id="deleteAlster"><p class="icon-trash" title="Toggle trash can"></p></a></span></h4>
         <div id="trash">Drag and drop here to delete</div>
-        <div id="myStuff">
-        <?php
-          // $myAlsterId = 0;
-          //   while ($row = $stmt->fetch()) {
-          //     $myAlsterId++;
-          //     $alsterId = $row['alsterId'];
-          //     $alsterUrl = $row['alsterUrl'];
-          //     echo '<a href="share/?id='. $alsterId .'" id="myAlster'.$myAlsterId.'" class="myAlster"><img src="alster/'. $alsterUrl .'" width="100" /></a>';
-          //   }
-        ?>
-        </div>
+        <div id="myStuff"></div>
         <div id="showMore"></div>
         <?php
        }
@@ -107,7 +91,9 @@ if ($user) {
     <script src="js/fb_login.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <?php if ($user): ?>
     <script src="js/jquery.masonry.min.js"></script>
     <script src="js/home.js"></script>
+    <?php endif ?>
   </body>
 </html>
