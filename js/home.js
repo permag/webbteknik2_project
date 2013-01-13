@@ -1,7 +1,8 @@
 var home = {
 
 	alsterStart: 0,
-	alsterTake: 5,
+	alsterTake: 7,
+	alsterIdCount: 0,
 
 	myStuff: function() {
 		var myStuff = $('#myStuff');
@@ -15,35 +16,50 @@ var home = {
 			success: function(data) {
 				$('#alsterLoading').remove();
 				home.alsterStart = home.alsterStart + home.alsterTake;
+				var count = 0;
+				var elHeight = myStuff.height();
 				$.each(data, function(key, val) {
-					var elHeight = myStuff.height() + 20;
-					myStuff.append('<a style="position:absolute;top:'+elHeight+'px" href="share/?id='+ val.alsterId +'" id="myAlster'+ key +'" class="myAlster"><img src="alster/'+ val.alsterUrl +'" width="100" /></a>');
+					home.alsterIdCount++;
+					elHeight = myStuff.height() + 20;
+					myStuff.append('<a style="position:absolute;top:'+elHeight+'px" href="share/?id='+ val.alsterId +'" id="myAlster'+ home.alsterIdCount +'" class="myAlster"><img src="alster/'+ val.alsterUrl +'" width="100" /></a>');
 					myStuff.masonry('reload');
+					count = key;
 				});
+				if ($('#showMoreButton').length != 0) { // not on page load
 				window.setTimeout(function(){
-					$("html, body").animate({ scrollTop: $(document).height() }, "slow");
-					myStuff.masonry('reload');
+						$("html, body").animate({ scrollTop: $(document).height() }, "slow");
+				},555);						
+				}
+				window.setTimeout(function(){
+						myStuff.masonry('reload');
 				},555);
 				window.setTimeout(function(){
 					myStuff.masonry('reload');
-				},3333);
-				if ($('#showMoreButton').length == 0) {
+				},2222);
+
+				if ($('#showMoreButton').length == 0 && count >= home.alsterTake - 1) {
 					$('#showMore').append('<button id="showMoreButton">Show more</button>');
 				
 					$('#showMoreButton').click(function() {
 						home.myStuff();
+						if ($('#trash').css('display') != 'none') {
+							home.deleteAlster(); // toggle delete box
+						}
 					});
 				}
 
 			},
 			error: function(error) {
-				myStuff.append('Error loading more alsters.')
+				myStuff.append('Error loading.')
 			}
 		});
 	},
 
 	deleteAlster: function() {
 		if ($('#trash').css('display') == 'none') {
+			var myStuff = $('#myStuff');
+			myStuff.attr('style', 'position:relative; overflow:none !important; height:'+myStuff.height()+'px;'); // masonry fix to prevent overflow:hidden
+
 			$('.myAlster').draggable({
 				helper: 'clone',
 				revert: 'invalid',

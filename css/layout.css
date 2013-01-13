@@ -78,12 +78,12 @@ input {
 .quotesList {
 	cursor: pointer;
 	padding: 5px 3px;
-	margin-bottom: 2px;
-	font-weight: bold;
+	margin-bottom: 7px;
 	font-style: italic;
+	background: rgba(200,200,200,0.2);
 }
 .quotesList:hover {
-	background: rgba(100,100,100,0.3);
+	background: rgba(200,200,200,0.5);
 }
 #editQuoteTextarea {
 	margin-left: 25px;
@@ -109,7 +109,7 @@ input {
 #myStuff {
 	width: 300px;
 	height: 100%;
-	overflow: hidden;
+	display: block;
 }
 #myStuff img {
 	border: 3px solid transparent;
