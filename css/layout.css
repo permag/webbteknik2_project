@@ -108,7 +108,8 @@ input {
 
 #myStuff {
 	width: 300px;
-	display: none;
+	height: 100%;
+	overflow: hidden;
 }
 #myStuff img {
 	border: 3px solid transparent;
@@ -159,4 +160,18 @@ input {
 	display: block;
 	width: 270px;
 	margin: 79px 0 19px 0;
+}
+#showMore {
+	display: block;
+	margin: 20px 0;
+}
+#showMore button {
+	width: 200px;
+	margin-left: 7px;
+	border: 1px solid gray;
+	background: #fafbfa;
+	color: gray;
+}
+#showMore button:active {
+	background: #fdffff;
 }

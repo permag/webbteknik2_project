@@ -1,5 +1,47 @@
 var home = {
 
+	alsterStart: 0,
+	alsterTake: 5,
+
+	myStuff: function() {
+		var myStuff = $('#myStuff');
+		myStuff.append('<div id="alsterLoading">Loading...</div>');
+
+		$.ajax({
+			url: 'model/getAlster.php',
+			type: 'GET',
+			dataType: 'JSON',
+			data: { start: home.alsterStart, take: home.alsterTake },
+			success: function(data) {
+				$('#alsterLoading').remove();
+				home.alsterStart = home.alsterStart + home.alsterTake;
+				$.each(data, function(key, val) {
+					var elHeight = myStuff.height() + 20;
+					myStuff.append('<a style="position:absolute;top:'+elHeight+'px" href="share/?id='+ val.alsterId +'" id="myAlster'+ key +'" class="myAlster"><img src="alster/'+ val.alsterUrl +'" width="100" /></a>');
+					myStuff.masonry('reload');
+				});
+				window.setTimeout(function(){
+					$("html, body").animate({ scrollTop: $(document).height() }, "slow");
+					myStuff.masonry('reload');
+				},555);
+				window.setTimeout(function(){
+					myStuff.masonry('reload');
+				},3333);
+				if ($('#showMoreButton').length == 0) {
+					$('#showMore').append('<button id="showMoreButton">Show more</button>');
+				
+					$('#showMoreButton').click(function() {
+						home.myStuff();
+					});
+				}
+
+			},
+			error: function(error) {
+				myStuff.append('Error loading more alsters.')
+			}
+		});
+	},
+
 	deleteAlster: function() {
 		if ($('#trash').css('display') == 'none') {
 			$('.myAlster').draggable({
@@ -45,7 +87,13 @@ var home = {
 		$container.imagesLoaded(function(){
 			$container.masonry({
 				itemSelector : item,
-				columnWidth: 109
+				columnWidth: 109,
+				isAnimated: true,
+				animationOptions: {
+					duration: 444,
+					easing: 'swing',
+					queue: false
+				}
 			});
 		});
 		$container.show()
@@ -53,6 +101,8 @@ var home = {
 };
 
 $(function(){
+	home.myStuff();
+
 	$('#deleteAlster').click(function(e){
 		home.deleteAlster();
 		e.preventDefault();

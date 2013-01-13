@@ -73,15 +73,16 @@ if ($user) {
         <div id="trash">Drag and drop here to delete</div>
         <div id="myStuff">
         <?php
-          $myAlsterId = 0;
-            while ($row = $stmt->fetch()) {
-              $myAlsterId++;
-              $alsterId = $row['alsterId'];
-              $alsterUrl = $row['alsterUrl'];
-              echo '<a href="share/?id='. $alsterId .'" id="myAlster'.$myAlsterId.'" class="myAlster"><img src="alster/'. $alsterUrl .'" width="100" /></a>';
-            }
+          // $myAlsterId = 0;
+          //   while ($row = $stmt->fetch()) {
+          //     $myAlsterId++;
+          //     $alsterId = $row['alsterId'];
+          //     $alsterUrl = $row['alsterUrl'];
+          //     echo '<a href="share/?id='. $alsterId .'" id="myAlster'.$myAlsterId.'" class="myAlster"><img src="alster/'. $alsterUrl .'" width="100" /></a>';
+          //   }
         ?>
         </div>
+        <div id="showMore"></div>
         <?php
        }
       ?>

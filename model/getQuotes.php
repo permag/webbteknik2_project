@@ -46,7 +46,7 @@
 	  	 */
 		
 		// time settings
-		$timestamp = strtotime(date('Y-m-d H:i:s', strtotime($dateNow)) . ' + 1 minute');
+		$timestamp = strtotime(date('Y-m-d H:i:s', strtotime($dateNow)) . ' + 1 week');
 		$nextUpdate = date('Y-m-d H:i:s', $timestamp);
 
 		//collect data from API in XML

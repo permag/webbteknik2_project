@@ -13,7 +13,13 @@ var init = {
 		if (typeof(Storage) !== 'undefined') {
 			if (sessionStorage[init.quoteHistorySessionName] != null) {
 				var history = JSON.parse(sessionStorage[init.quoteHistorySessionName]);
-				init.quoteHistoryArray = history;
+
+				function unique(array){
+					return $.grep(array,function(el,index){
+						return index == $.inArray(el,array);
+					});
+				}
+				init.quoteHistoryArray = unique(history);
 
 				init.quoteHistory($('#searchQuoteTagArea'), null);
 			}		
