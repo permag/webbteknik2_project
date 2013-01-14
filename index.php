@@ -52,7 +52,7 @@ if ($user) {
       </div>
     </nav>
 
-    <div class="container main">
+    <div class="container main hero-unit">
 
       <div class="continer pull-right">
       <?php if ($user) { ?>
@@ -67,10 +67,12 @@ if ($user) {
           echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">
                 <span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>
                 <button id="logoutLink" class="btn btn-mini">Logout</button>
+                <h1>:::Get silly!</h1>
                 <a href="main.php" id="createButton" class="btn btn-large btn-primary">Start creating!</a>';
         } ?>
 
       <?php if (!$user): ?>
+        <h1>sillyPlay</h1>
         <strong><em>Login using your Facebook account: </em></strong>
         <button id="loginLink" class="btn">Login</button>
       <?php endif ?>

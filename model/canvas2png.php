@@ -52,7 +52,7 @@
         $lastInsertId = $db->lastInsertId();
 
         // set alphaId
-      //  $alphaId = saveAlphaId($db, $lastInsertId);
+        $alphaId = saveAlphaId($db, $lastInsertId);
 
         echo json_encode($lastInsertId); // ajax callback
     }
@@ -63,7 +63,8 @@
         $alphaIdGenerator = new AlphaIdGenerator();
         $alphaId = $alphaIdGenerator->alphaId($id);
 
-        $db->update("UPDATE Alster SET alphaId = :alphaId WHERE alsterId = :alsterId", array(':alphaId' => $alphaId, ':alsterId' => $id));
+        $db->update("UPDATE Alster SET alphaId = :alphaId WHERE alsterId = :alsterId", 
+            array(':alphaId' => $alphaId, ':alsterId' => $id));
 
         return $alphaId;
     }

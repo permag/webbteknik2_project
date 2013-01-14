@@ -1,4 +1,5 @@
 h1 {
+	margin-top: 40px;
 	margin-bottom: 20px;
 }
 h3 {
@@ -88,10 +89,12 @@ input {
 #editQuoteTextarea {
 	margin-left: 25px;
 	width: 392px;
+	height: 170px;
 	min-height: 99px;
 }
 #editQuoteButtons {
 	margin-left: 20px;
+	margin-bottom: 9px;
 }
 #saveQuoteEdit, #cancelQuoteEdit {
 	margin: 5px 0 9px 7px;
@@ -130,7 +133,7 @@ input {
 	margin-left: 130px;
 }
 #trash {
-	width: 212px;
+	width: 215px;
 	height: 100px;
 	display: none;
 	background: rgba(100,100,100,0.8);

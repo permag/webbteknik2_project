@@ -14,7 +14,7 @@
 						LIMIT :start, :take', 
 						array(':externalUserId' => $activeUserId,
 							  ':start' 			=> $start,
-							  'take' 			=> $take));
+							  ':take' 			=> $take));
 
 	$alstersJSON = array();
 
