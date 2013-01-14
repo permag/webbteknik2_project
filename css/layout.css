@@ -89,8 +89,11 @@ input {
 #editQuoteTextarea {
 	margin-left: 25px;
 	width: 392px;
+	min-width: 392px;
+	max-width: 392px;
 	height: 170px;
 	min-height: 99px;
+	max-height: 300px;
 }
 #editQuoteButtons {
 	margin-left: 20px;
@@ -109,8 +112,11 @@ input {
 #map label { width: auto; display:inline; }
 #map img { max-width: none; }
 
+.myStuffCont {
+	padding-left: 29px;
+}
 #myStuff {
-	width: 300px;
+	width: 271px;
 	height: 100%;
 	display: block;
 }

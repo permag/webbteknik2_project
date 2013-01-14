@@ -14,10 +14,12 @@ var home = {
 			dataType: 'JSON',
 			data: { start: home.alsterStart, take: home.alsterTake },
 			success: function(data) {
-				// if (data == null || data == '') {
-				// 	myStuff.html('<p>Nothing here. Start creating!</p>');
-				// 	return false;
-				// }
+				if (data == null || data == '') {
+					//myStuff.html('<p>Nothing here. Start creating!</p>');
+					$('#showMoreButton').attr('disabled', 'disabled').html('That\'s all!');
+					$('#alsterLoading').remove();
+					return false;
+				}
 				$('#alsterLoading').remove();
 				home.alsterStart = home.alsterStart + home.alsterTake;
 				var count = 0;
@@ -25,15 +27,8 @@ var home = {
 				$.each(data, function(key, val) {
 					home.alsterIdCount++;
 					elHeight = myStuff.height() + 20;
-
-					var img = $("<img />").attr("src", 'alster/' + val.alsterUrl);
-					img.load(function() {
-						myStuff.append('<a style="position:absolute;top:'+elHeight+'px" href="share/?id='+ val.alsterId +'" id="myAlster'+ home.alsterIdCount +'" class="myAlster"></a>');
-						img.attr('width', 100);
-						myStuff.find('a').last().append(img);
-						myStuff.masonry('reload');
-					});
-
+					myStuff.append('<a style="position:absolute;top:'+elHeight+'px" href="share/?id='+ val.alsterId +'" id="myAlster'+ home.alsterIdCount +'" class="myAlster"><img src="alster/'+ val.alsterUrl +'" width="100" /></a>');
+					myStuff.masonry('reload');
 					count = key;
 				});
 				if ($('#showMoreButton').length != 0) { // not on page load

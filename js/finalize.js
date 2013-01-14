@@ -21,12 +21,17 @@ var finalize = {
 				modal: true,
 				buttons: {
 					"Yes, go ahead!": function() {
+						var that = $(this);
 						var tags = $("#tags").val();
 						$('.ui-dialog button').button('disable'); // disable buttons, prevent multi clicks
 						$(this).html("<p>Finalizing... Please wait... <img src='img/ajax-loader.gif' /></p>");
 						if (finalize.allowGeo) {
 							if (navigator.geolocation){
 								navigator.geolocation.getCurrentPosition(getPosition);
+								setTimeout(function() {
+									alert('Could not find your geolocation. \n\nPlease finalize again with geolocation turned OFF.')
+									that.dialog("close");
+								},19999);
 							}
 
 						} else {

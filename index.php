@@ -54,7 +54,7 @@ if ($user) {
 
     <div class="container main hero-unit">
 
-      <div class="continer pull-right">
+      <div class="myStuffCont pull-right">
       <?php if ($user) { ?>
         <h4>My stuff <span id="deleteAlsterSpan"><a href="#" id="deleteAlster"><p class="icon-trash" title="Toggle trash can"></p></a></span></h4>
         <div id="trash">Drag and drop here to delete</div>
