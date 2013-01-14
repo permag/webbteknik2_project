@@ -114,7 +114,7 @@
 				</div>
 				<!-- image -->
 				<div id="theImage">
-					<img src="../alster/<?php echo $filename; ?>" alt="" />
+					<a href="../index.php"><img src="../alster/<?php echo $filename; ?>" alt="" /></a>
 				</div>
 				<!-- right section -->
 				<div id="rightSection">

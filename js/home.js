@@ -1,7 +1,7 @@
 var home = {
 
 	alsterStart: 0,
-	alsterTake: 7,
+	alsterTake: 6,
 	alsterIdCount: 0,
 
 	myStuff: function() {

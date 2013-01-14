@@ -24,6 +24,9 @@ p {
 	font-size: 12px;
 	color: #bbb;
 }
+.navbar .container, .container {
+	width: 799px;
+}
 #leftContainer {
 	display: inline;
 	float: left;
@@ -50,7 +53,7 @@ p {
 #shareContainer {
 	width: 100%;
 	overflow: hidden;
-	min-width: 960px;
+	min-width: 760px;
 }
 #shareContent {
 	width: 850px;

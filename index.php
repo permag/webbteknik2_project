@@ -6,11 +6,6 @@ require_once('fb.php');
 
 if ($user) {
   $_SESSION['activeUserId'] = $user_profile['id'];
-
-  //db
-  $db = new Database();
-  $db->createDatabase('sqlite:data/sillyPlayDB.sqlite');
-  $stmt = $db->select('SELECT * FROM Alster WHERE externalUserId = :externalUserId ORDER BY alsterId DESC', array(':externalUserId' => $_SESSION['activeUserId']));
 }
 
 ?>
@@ -60,26 +55,20 @@ if ($user) {
     <div class="container main">
 
       <div class="continer pull-right">
-      <?php
-      if ($user) {
-        ?>
+      <?php if ($user) { ?>
         <h4>My stuff <span id="deleteAlsterSpan"><a href="#" id="deleteAlster"><p class="icon-trash" title="Toggle trash can"></p></a></span></h4>
         <div id="trash">Drag and drop here to delete</div>
         <div id="myStuff"></div>
         <div id="showMore"></div>
-        <?php
-       }
-      ?>
+      <?php } ?>
       </div>
 
-        <?php
-          if ($user) {
-            echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">
-                  <span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>
-                  <button id="logoutLink" class="btn btn-mini">Logout</button>
-                  <a href="main.php" id="createButton" class="btn btn-large btn-primary">Start creating!</a>';
-          }
-        ?>
+      <?php if ($user) {
+          echo '<img src="https://graph.facebook.com/'.$user.'/picture" class="profilePic">
+                <span class="profileName">'.$user_profile['first_name'] . ' ' . $user_profile['last_name'].'</span>
+                <button id="logoutLink" class="btn btn-mini">Logout</button>
+                <a href="main.php" id="createButton" class="btn btn-large btn-primary">Start creating!</a>';
+        } ?>
 
       <?php if (!$user): ?>
         <strong><em>Login using your Facebook account: </em></strong>
