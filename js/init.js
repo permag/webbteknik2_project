@@ -267,7 +267,7 @@ var init = {
 		quote = quote.replace(/<br\s*[\/]?>/gi, '\n');
 
 		quoteFrame.hide();
-		quoteFrame.parent().append('<textarea id="editQuoteTextarea" maxlength="1999">'+ quote +'</textarea><div id="editQuoteButtons"><button id="saveQuoteEdit" class="btn btn-primary">Save</button><button id="cancelQuoteEdit" class="btn">Cancel</button></div>');
+		quoteFrame.parent().append('<textarea id="editQuoteTextarea" maxlength="1999">'+ quote +'</textarea><div id="editQuoteButtons"><button id="cancelQuoteEdit" class="btn">Cancel</button><button id="saveQuoteEdit" class="btn btn-primary">Save</button></div>');
 
 		$('#saveQuoteEdit').click(function(e){
 			var text = $('#editQuoteTextarea').val();
@@ -287,7 +287,7 @@ var init = {
 			type: 'GET',
 			data: { imgUrl: imgUrl },
 			success: function(data){
-
+				// ...
 			}
 		});
 	},
@@ -346,6 +346,9 @@ $(function() {
 	});
 	// finalize
 	$('#finalize').click(function(e){
+		$('#saveQuoteEdit').click();
+		$('#alsterQuoteFrame').html($('#editQuoteTextarea').val()).show();
+		$('#editQuoteTextarea, #editQuoteButtons').remove();
 		finalize.preMake();
 	});
 

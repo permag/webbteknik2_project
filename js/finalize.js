@@ -6,10 +6,6 @@ var finalize = {
 
 	preMake: function() {
 		finalize.allowGeo = true;
-		$('#saveQuoteEdit').click();
-		$('#alsterQuoteFrame').html($('#editQuoteTextarea').val()).show();
-		$('#editQuoteTextarea, #editQuoteButtons').remove();
-
 		var dialogContentText = '';
 			var finalizeDialog = $("#finalizeDialog");
 			finalizeDialog.dialog({

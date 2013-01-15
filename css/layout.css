@@ -173,14 +173,6 @@ input {
 #showMore {
 	display: block;
 	margin: 20px 0;
-	opacity: 0.4;
-	-moz-opacity: 0.4;
-}
-#showMore:hover{
-	display: block;
-	margin: 20px 0;
-	opacity: 1;
-	-moz-opacity: 1;
 }
 #showMore button {
 	width: 200px;
@@ -188,6 +180,12 @@ input {
 	border: 1px solid gray;
 	background: #fafbfa;
 	color: gray;
+	opacity: 0.4;
+	-moz-opacity: 0.4;
+}
+#showMore button:hover{
+	opacity: 1;
+	-moz-opacity: 1;
 }
 #showMore button:active {
 	background: #fdffff;

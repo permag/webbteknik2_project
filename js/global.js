@@ -36,7 +36,7 @@ $(function(){
 	});
 
 
-	$.getJSON('model/coordsJSON.php', function(data){ // to use API url via VPN: 'model/getAllAlsters.php'
+	$.getJSON('http://localhost/Dev/webbteknik2_project/api/index.php/alsters.json', function(data){ // to use API url via VPN: 'model/getAllAlsters.php'
 		var json = data;
 		
 		for (var i = 0, length = json.length; i < length; i++) {

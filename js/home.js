@@ -28,9 +28,14 @@ var home = {
 					home.alsterIdCount++;
 					elHeight = myStuff.height() + 20;
 					myStuff.append('<a style="position:absolute;top:'+elHeight+'px" href="share/?id='+ val.alsterId +'" id="myAlster'+ home.alsterIdCount +'" class="myAlster"><img src="alster/'+ val.alsterUrl +'" width="100" /></a>');
+					/////$('#myAlster'+home.alsterIdCount).css('visibility', 'hidden');
 					myStuff.masonry('reload');
 					count = key;
 				});
+				// setTimeout(function(){
+				// 	$('.myAlster').css('visibility', 'visible');
+				// },777);
+
 				if ($('#showMoreButton').length != 0) { // not on page load
 				window.setTimeout(function(){
 						$("html, body").animate({ scrollTop: $(document).height() }, "slow");
