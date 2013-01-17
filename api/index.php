@@ -44,7 +44,10 @@
 			if ($method == 'get') {
 				Toro::serve(array(
 					'/alsters' => 'Alsters',
-					'/alsters.:ext' => 'Alsters'
+					'/alsters.:ext' => 'Alsters',
+
+					'/:number/alsters' => 'AlsterById',
+					'/:number/alsters.:ext' => 'AlsterById'
 				));
 			}
 		}
@@ -64,6 +67,30 @@
 			$ret = $this->_apiModel->getAlsters();
 
 			if ($code = $this->_apiView->checkForError($ret)) { // if true - errors
+				$this->_apiView->setStatusCode($code);
+				$back = $this->_apiView->getErrorMessage($code); 
+			
+			} else { // no errors
+				$this->_apiView->setStatusCode(200);
+				$this->_apiView->setContentType($format);
+				$back = $this->_apiModel->toFormat($ret, $format);
+			}
+
+			echo $back;
+		}
+	}
+
+		class AlsterById extends Init {
+
+		/**
+		* GET ALSTERS
+		*/
+		function get($id = null, $format = 'json') {
+			// GET producer by id
+			$back = null;
+			$ret = $this->_apiModel->getAlsterById($id);
+
+			if ($code = $this->_apiView->checkForError($ret, $id)) { // if true - errors
 				$this->_apiView->setStatusCode($code);
 				$back = $this->_apiView->getErrorMessage($code); 
 			

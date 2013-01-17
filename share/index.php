@@ -11,23 +11,12 @@
 	$alsterId = $alphaIdGenerator -> alphaId($id, true); // true get back number from alphaId (= alsterId)
 	$alsterId = intval($alsterId);
 
-	$db = new Database();
-	$db->createDatabase('sqlite:../data/sillyPlayDB.sqlite');
+	$alsterUrl = 'http://localhost/dev/webbteknik2_project/api/index.php/'.$id.'/alsters.json';
+	$json = file_get_contents($alsterUrl,0,null,null);
+	$json_output = json_decode($json);
 
-	// get creation and member
-	try {
-		$stmt = $db->select('SELECT * FROM Alster WHERE alsterId = :alsterId', array(':alsterId' => $id));
-		
-		while ($row = $stmt->fetch()){
-			$id = $row['alsterId'];
-			$filename = $row['alsterUrl'];
-		}
-		if (count($filename) != 1) {
-			header('location: pagenotfound.php');
-		}
-
-	} catch(PDOException $e) {
-	    echo 'ERROR: ' . $e->getMessage();
+	foreach ($json_output as $alster) {
+		$filename = $alster->alsterUrl;
 	}
 
 ?>

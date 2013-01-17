@@ -8,11 +8,39 @@
 		}
 
 		/**
-		 * [getAlsters]
+		 * getAlsters
 		 */
 		public function getAlsters() {
 
 			$stmt = $this->_db->select('SELECT * FROM Alster WHERE lng != ""');
+			if ($stmt == null) {
+				return 'error500';
+			}
+
+			$alstersArray = array();
+
+			while ($obj = $stmt->fetch(\PDO::FETCH_OBJ)) {
+				$alster = new stdClass();
+				$alster->alsterId 	= htmlspecialchars($obj->alsterId);
+				$alster->alsterUrl 	= htmlspecialchars($obj->alsterUrl);
+				$alster->alphaId 	= htmlspecialchars($obj->alphaId);
+				$alster->lat 		= htmlspecialchars($obj->lat);
+				$alster->lng 		= htmlspecialchars($obj->lng);
+
+				$alstersArray[] = $alster;
+			}
+			$stmt = null;
+
+			return $alstersArray;
+		}
+
+		/**
+		 * getAlsterById
+		 */
+		public function getAlsterById($alsterId) {
+
+			$stmt = $this->_db->select('SELECT * FROM Alster WHERE alsterId = :alsterId',
+										array(':alsterId' => $alsterId));
 			if ($stmt == null) {
 				return 'error500';
 			}
